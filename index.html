@@ -12,277 +12,392 @@
 
 <body>
 
-    <!-- BACKGROUND -->
+    <!-- =========================
+         BACKGROUND
+    ========================== -->
     <div class="background">
-        <span class="sparkle"></span>
-        <span class="sparkle"></span>
-        <span class="sparkle"></span>
-        <span class="sparkle"></span>
-        <span class="sparkle"></span>
-        <span class="sparkle"></span>
-        <span class="sparkle"></span>
-        <span class="sparkle"></span>
+
+        <div class="sparkles">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+        <div class="falling-photos">
+            <img src="./photo/ny1.jpg" alt="">
+            <img src="./photo/ny2.jpg" alt="">
+            <img src="./photo/ny3.jpg" alt="">
+            <img src="./photo/ny4.jpg" alt="">
+            <img src="./photo/ny5.jpg" alt="">
+            <img src="./photo/ny6.jpg" alt="">
+            <img src="./photo/ny7.jpg" alt="">
+            <img src="./photo/ny8.jpg" alt="">
+            <img src="./photo/ny9.jpg" alt="">
+            <img src="./photo/ny10.png" alt="">
+            <img src="./photo/ny11.png" alt="">
+            <img src="./photo/ny12.png" alt="">
+            <img src="./photo/ny13.png" alt="">
+        </div>
+
     </div>
 
 
-    <!-- ẢNH RƠI -->
-    <div class="floating-photos">
-
-        <img src="./photo/ny1.jpg" class="photo photo1">
-        <img src="./photo/ny2.jpg" class="photo photo2">
-        <img src="./photo/ny3.jpg" class="photo photo3">
-        <img src="./photo/ny4.jpg" class="photo photo4">
-        <img src="./photo/ny5.jpg" class="photo photo5">
-        <img src="./photo/ny6.jpg" class="photo photo6">
-        <img src="./photo/ny7.jpg" class="photo photo7">
-        <img src="./photo/ny8.jpg" class="photo photo8">
-        <img src="./photo/ny9.jpg" class="photo photo9">
-        <img src="./photo/ny10.png" class="photo photo10">
-        <img src="./photo/ny11.png" class="photo photo11">
-        <img src="./photo/ny12.png" class="photo photo12">
-        <img src="./photo/ny13.png" class="photo photo13">
-
-    </div>
-
-
-    <!-- ==========================================
-         PHONG THƯ
-    =========================================== -->
-
-    <main class="scene" id="letterScene">
+    <!-- =========================
+         1. BÌ THƯ
+    ========================== -->
+    <section class="letter-scene" id="letterScene">
 
         <div class="envelope-wrapper" id="envelope">
 
-            <div class="letter">
+            <div class="envelope">
 
-                <div class="letter-content">
+                <div class="envelope-back"></div>
 
-                    <div class="small-title">
-                        TO MY LOVE
+                <!-- LÁ THƯ -->
+                <div class="letter">
+
+                    <div class="letter-inner">
+
+                        <div class="letter-label">
+                            HAPPY BIRTHDAY
+                        </div>
+
+                        <h1>Gửi em ❤️</h1>
+
+                        <div class="letter-message" id="message"></div>
+
+                        <div class="letter-signature">
+                            Anh ❤️
+                        </div>
+
+                        <button class="continue-btn" id="continueBtn" type="button">
+                            TIẾP TỤC
+                        </button>
+
                     </div>
-
-                    <h1>
-                        HAPPY BIRTHDAY ❤️
-                    </h1>
-
-                    <div class="message" id="message">
-                    </div>
-
-                    <div class="signature">
-                        Khoa ❤️
-                    </div>
-
-                    <!-- NÚT QUA MÀN TIẾP -->
-                    <button class="continue-btn" id="continueBtn">
-
-                        TIẾP TỤC ❤️
-
-                    </button>
 
                 </div>
 
-            </div>
+
+                <!-- NẮP PHONG BÌ -->
+                <div class="flap"></div>
+
+                <!-- MẶT TRƯỚC PHONG BÌ -->
+                <div class="envelope-front"></div>
 
 
-            <div class="envelope">
-
-                <button class="open-btn" id="openBtn">
+                <!-- CON DẤU TRÒN -->
+                <button class="seal" id="seal" type="button" aria-label="Mở thư">
+                    <span>♥</span>
                 </button>
 
             </div>
 
-
-            <div class="flap"></div>
-
         </div>
 
-    </main>
+    </section>
 
 
-
-    <!-- ==========================================
-         MÀN HÌNH BÁNH KEM
-    =========================================== -->
-
+    <!-- =========================
+         2. BÁNH KEM
+    ========================== -->
     <section class="cake-screen" id="cakeScreen">
 
+        <div class="cake-heading">
 
-        <div class="cake-title">
-            Một chút bất ngờ dành cho em ❤️
+            <div class="cake-small">
+                HAPPY BIRTHDAY
+            </div>
+
+            <h1>
+                Một điều ước dành cho em
+            </h1>
+
+            <p>
+                Hãy cùng anh thổi nến nhé.
+            </p>
+
         </div>
 
 
-        <div class="cake-subtitle">
-            Hãy thổi nến và mở món quà nhé ✨
-        </div>
+        <div class="cake-stage">
 
-
-        <!-- BÁNH -->
-        <div class="cake-area">
-
-            <div class="falling-candle candle1">
-                🕯️
-            </div>
-
-            <div class="falling-candle candle2">
-                🕯️
-            </div>
-
-            <div class="falling-candle candle3">
-                🕯️
-            </div>
-
+            <div class="cake-shadow"></div>
 
             <div class="cake">
 
-                <div class="cake-candle">
-                    <span class="fire">🔥</span>
+                <div class="cake-top">
+                    <div class="cream-top"></div>
                 </div>
-
-                <div class="cake-top"></div>
 
                 <div class="cake-body">
-
-                    <div class="cream"></div>
-
-                    <div class="cream-dot dot1"></div>
-                    <div class="cream-dot dot2"></div>
-                    <div class="cream-dot dot3"></div>
-                    <div class="cream-dot dot4"></div>
-
+                    <div class="cream-drip"></div>
                 </div>
 
-                <div class="cake-bottom"></div>
+                <div class="cake-base"></div>
+
+                <span class="cake-dot dot-1"></span>
+                <span class="cake-dot dot-2"></span>
+                <span class="cake-dot dot-3"></span>
+                <span class="cake-dot dot-4"></span>
+
+
+                <!-- NẾN -->
+                <div class="candle candle-1">
+                    <div class="flame"></div>
+                </div>
+
+                <div class="candle candle-2">
+                    <div class="flame"></div>
+                </div>
+
+                <div class="candle candle-3">
+                    <div class="flame"></div>
+                </div>
 
             </div>
 
         </div>
 
 
-        <button class="open-gift-btn" id="openGiftBtn">
-
-            🎁 MỞ QUÀ
-
+        <button class="premium-button open-gift-btn" id="openGiftBtn" type="button">
+            MỞ QUÀ
         </button>
 
     </section>
 
 
-
-    <!-- ==========================================
-         MÀN CHỌN VÉ
-    =========================================== -->
-
+    <!-- =========================
+         3. 6 THẺ CÀO
+    ========================== -->
     <section class="scratch-screen" id="scratchScreen">
-
 
         <div class="ticket-selection" id="ticketSelection">
 
+            <div class="ticket-heading">
 
-            <div class="scratch-title">
-                🎫 CHỌN MỘT MÓN QUÀ
-            </div>
+                <div class="ticket-heading-small">
+                    A GIFT FOR YOU
+                </div>
 
+                <h1>6 chiếc thẻ cào</h1>
 
-            <div class="scratch-subtitle">
-                Chọn một chiếc vé bất kỳ ❤️
+                <p>
+                    Anh đã chuẩn bị 6 phần quà khác nhau.
+                </p>
+
+                <p class="ticket-note">
+                    Em hãy chọn một chiếc cho mình.
+                </p>
+
             </div>
 
 
             <div class="tickets">
 
+                <!-- THẺ 01 -->
+                <button class="ticket" data-ticket="1" type="button">
+                    <div class="ticket-inner">
 
-                <div class="ticket" data-ticket="1">
-                    <span>01</span>
-                    <b>MAY MẮN</b>
-                </div>
+                        <div class="ticket-number">
+                            01
+                        </div>
 
+                        <div class="ticket-divider"></div>
 
-                <div class="ticket" data-ticket="2">
-                    <span>02</span>
-                    <b>MAY MẮN</b>
-                </div>
+                        <div class="ticket-title">
+                            PHẦN QUÀ
+                        </div>
 
+                        <div class="ticket-secret">
+                            SCRATCH CARD
+                        </div>
 
-                <div class="ticket" data-ticket="3">
-                    <span>03</span>
-                    <b>MAY MẮN</b>
-                </div>
+                        <div class="ticket-bottom">
+                            CHỌN CHIẾC NÀY
+                        </div>
 
-
-                <div class="ticket" data-ticket="4">
-                    <span>04</span>
-                    <b>MAY MẮN</b>
-                </div>
-
-
-                <div class="ticket" data-ticket="5">
-                    <span>05</span>
-                    <b>MAY MẮN</b>
-                </div>
+                    </div>
+                </button>
 
 
-                <div class="ticket" data-ticket="6">
-                    <span>06</span>
-                    <b>MAY MẮN</b>
-                </div>
+                <!-- THẺ 02 -->
+                <button class="ticket" data-ticket="2" type="button">
+                    <div class="ticket-inner">
 
+                        <div class="ticket-number">
+                            02
+                        </div>
+
+                        <div class="ticket-divider"></div>
+
+                        <div class="ticket-title">
+                            PHẦN QUÀ
+                        </div>
+
+                        <div class="ticket-secret">
+                            SCRATCH CARD
+                        </div>
+
+                        <div class="ticket-bottom">
+                            CHỌN CHIẾC NÀY
+                        </div>
+
+                    </div>
+                </button>
+
+
+                <!-- THẺ 03 -->
+                <button class="ticket" data-ticket="3" type="button">
+                    <div class="ticket-inner">
+
+                        <div class="ticket-number">
+                            03
+                        </div>
+
+                        <div class="ticket-divider"></div>
+
+                        <div class="ticket-title">
+                            PHẦN QUÀ
+                        </div>
+
+                        <div class="ticket-secret">
+                            SCRATCH CARD
+                        </div>
+
+                        <div class="ticket-bottom">
+                            CHỌN CHIẾC NÀY
+                        </div>
+
+                    </div>
+                </button>
+
+
+                <!-- THẺ 04 -->
+                <button class="ticket" data-ticket="4" type="button">
+                    <div class="ticket-inner">
+
+                        <div class="ticket-number">
+                            04
+                        </div>
+
+                        <div class="ticket-divider"></div>
+
+                        <div class="ticket-title">
+                            PHẦN QUÀ
+                        </div>
+
+                        <div class="ticket-secret">
+                            SCRATCH CARD
+                        </div>
+
+                        <div class="ticket-bottom">
+                            CHỌN CHIẾC NÀY
+                        </div>
+
+                    </div>
+                </button>
+
+
+                <!-- THẺ 05 -->
+                <button class="ticket" data-ticket="5" type="button">
+                    <div class="ticket-inner">
+
+                        <div class="ticket-number">
+                            05
+                        </div>
+
+                        <div class="ticket-divider"></div>
+
+                        <div class="ticket-title">
+                            PHẦN QUÀ
+                        </div>
+
+                        <div class="ticket-secret">
+                            SCRATCH CARD
+                        </div>
+
+                        <div class="ticket-bottom">
+                            CHỌN CHIẾC NÀY
+                        </div>
+
+                    </div>
+                </button>
+
+
+                <!-- THẺ 06 -->
+                <button class="ticket" data-ticket="6" type="button">
+                    <div class="ticket-inner">
+
+                        <div class="ticket-number">
+                            06
+                        </div>
+
+                        <div class="ticket-divider"></div>
+
+                        <div class="ticket-title">
+                            PHẦN QUÀ
+                        </div>
+
+                        <div class="ticket-secret">
+                            SCRATCH CARD
+                        </div>
+
+                        <div class="ticket-bottom">
+                            CHỌN CHIẾC NÀY
+                        </div>
+
+                    </div>
+                </button>
 
             </div>
 
         </div>
 
 
-
-        <!-- ==========================================
-             THẺ CÀO
-        =========================================== -->
-
+        <!-- =========================
+             THẺ CÀO SAU KHI CHỌN
+        ========================== -->
         <div class="selected-ticket" id="selectedTicket">
 
+            <div class="scratch-card">
 
-            <div class="modern-card">
+                <div class="scratch-card-top">
 
+                    <div>
+                        <span>HAPPY BIRTHDAY</span>
 
-                <!-- TOP -->
-                <div class="card-top">
+                        <strong>
+                            SECRET GIFT CARD
+                        </strong>
+                    </div>
 
-                    <span>
-                        SPECIAL GIFT
-                    </span>
-
-                    <span>
-                        ❤️
-                    </span>
-
-                </div>
-
-
-                <!-- ICON -->
-                <div class="gift-icon">
-                    🎁
-                </div>
-
-
-                <div class="modern-congrats">
-                    CHÚC MỪNG
-                </div>
-
-
-                <div class="modern-subtitle">
+                    <b id="selectedTicketNumber">
+                        01
+                    </b>
 
                 </div>
 
 
-                <div class="money-prize" id="moneyPrize">
+                <div class="scratch-card-heading">
 
+                    <small>
+                        CHIẾC VÉ EM ĐÃ CHỌN
+                    </small>
 
+                    <h2>
+                        PHẦN QUÀ BÍ MẬT
+                    </h2>
 
-                </div>
+                    <p>
+                        Cào lớp bạc để xem món quà của em
+                    </p>
 
-
-                <div class="modern-note">
-                    Cào lớp bạc bên dưới để nhận quà
                 </div>
 
 
@@ -290,80 +405,75 @@
 
                     <div class="hidden-reward">
 
-                        <span>
-                            🎉
-                        </span>
+                        <div class="reward-small">
+                            CHÚC MỪNG EM
+                        </div>
 
-                        <strong>
-                            PHẦN THƯỞNG CỦA EM
+                        <strong id="moneyPrize">
+                            5.000.000 VNĐ
                         </strong>
 
-                        <b id="hiddenMoney">
-                            5.000.000 VNĐ
-                        </b>
+                        <div class="reward-note">
+                            Đây là món quà dành riêng cho em
+                        </div>
 
                     </div>
 
-
-                    <canvas id="scratchCanvas">
-                    </canvas>
+                    <canvas id="scratchCanvas"></canvas>
 
                 </div>
 
 
-                <div class="scratch-progress">
-                    Cào hơn 60% để mở quà
+                <div class="scratch-progress" id="scratchProgress">
+                    Cào lớp bạc để mở phần quà
                 </div>
 
-
-                <button class="claim-btn" id="claimBtn">
-
-                    NHẬN QUÀ 
-
-                </button>
-
-
             </div>
-
-
-        </div>
-
-
-        <!-- ==========================================
-             THÔNG BÁO NHẬN QUÀ
-        =========================================== -->
-
-        <div class="claim-success" id="claimSuccess">
-
-
-            <div class="success-icon">
-                ✓
-            </div>
-
-
-            <div class="success-title">
-                YÊU CẦU ĐÃ ĐƯỢC GỬI
-            </div>
-
-
-            <div class="success-text">
-
-                Anh đã nhận được yêu cầu nhận quà của em.
-
-
-
-            </div>
-
-
-            <div class="success-money" id="successMoney">
-            </div>
-
 
         </div>
 
     </section>
 
 
+    <!-- =========================
+         4. CHÚC MỪNG SAU KHI CÀO
+    ========================== -->
+    <section class="claim-success" id="claimSuccess">
+
+        <div class="success-card">
+
+            <div class="success-small">
+                HAPPY BIRTHDAY
+            </div>
+
+            <div class="success-line"></div>
+
+            <h1>
+                CHÚC MỪNG EM
+            </h1>
+
+            <p>
+                Phần quà em đã chọn là
+            </p>
+
+            <div class="success-money" id="successMoney">
+                5.000.000 VNĐ
+            </div>
+
+            <p class="success-note">
+                Đây là món quà anh dành riêng cho em ❤️
+            </p>
+
+            <button class="premium-button" id="finalClaimBtn" type="button">
+                NHẬN QUÀ
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- JAVASCRIPT -->
     <script src="script.js"></script>
 
 </body>
