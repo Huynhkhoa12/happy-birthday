@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Happy Birthday ❤️</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- BACKGROUND -->
+    <div class="background">
+        <span class="sparkle"></span>
+        <span class="sparkle"></span>
+        <span class="sparkle"></span>
+        <span class="sparkle"></span>
+        <span class="sparkle"></span>
+        <span class="sparkle"></span>
+        <span class="sparkle"></span>
+        <span class="sparkle"></span>
+    </div>
+
+
+    <!-- ẢNH RƠI -->
+    <div class="floating-photos">
+
+        <img src="./photo/ny1.jpg" class="photo photo1">
+        <img src="./photo/ny2.jpg" class="photo photo2">
+        <img src="./photo/ny3.jpg" class="photo photo3">
+        <img src="./photo/ny4.jpg" class="photo photo4">
+        <img src="./photo/ny5.jpg" class="photo photo5">
+        <img src="./photo/ny6.jpg" class="photo photo6">
+        <img src="./photo/ny7.jpg" class="photo photo7">
+        <img src="./photo/ny8.jpg" class="photo photo8">
+        <img src="./photo/ny9.jpg" class="photo photo9">
+        <img src="./photo/ny10.png" class="photo photo10">
+        <img src="./photo/ny11.png" class="photo photo11">
+        <img src="./photo/ny12.png" class="photo photo12">
+        <img src="./photo/ny13.png" class="photo photo13">
+
+    </div>
+
+
+    <!-- ==========================================
+         PHONG THƯ
+    =========================================== -->
+
+    <main class="scene" id="letterScene">
+
+        <div class="envelope-wrapper" id="envelope">
+
+            <div class="letter">
+
+                <div class="letter-content">
+
+                    <div class="small-title">
+                        TO MY LOVE
+                    </div>
+
+                    <h1>
+                        HAPPY BIRTHDAY ❤️
+                    </h1>
+
+                    <div class="message" id="message">
+                    </div>
+
+                    <div class="signature">
+                        Khoa ❤️
+                    </div>
+
+                    <!-- NÚT QUA MÀN TIẾP -->
+                    <button class="continue-btn" id="continueBtn">
+
+                        TIẾP TỤC ❤️
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div class="envelope">
+
+                <button class="open-btn" id="openBtn">
+                </button>
+
+            </div>
+
+
+            <div class="flap"></div>
+
+        </div>
+
+    </main>
+
+
+
+    <!-- ==========================================
+         MÀN HÌNH BÁNH KEM
+    =========================================== -->
+
+    <section class="cake-screen" id="cakeScreen">
+
+
+        <div class="cake-title">
+            Một chút bất ngờ dành cho em ❤️
+        </div>
+
+
+        <div class="cake-subtitle">
+            Hãy thổi nến và mở món quà nhé ✨
+        </div>
+
+
+        <!-- BÁNH -->
+        <div class="cake-area">
+
+            <div class="falling-candle candle1">
+                🕯️
+            </div>
+
+            <div class="falling-candle candle2">
+                🕯️
+            </div>
+
+            <div class="falling-candle candle3">
+                🕯️
+            </div>
+
+
+            <div class="cake">
+
+                <div class="cake-candle">
+                    <span class="fire">🔥</span>
+                </div>
+
+                <div class="cake-top"></div>
+
+                <div class="cake-body">
+
+                    <div class="cream"></div>
+
+                    <div class="cream-dot dot1"></div>
+                    <div class="cream-dot dot2"></div>
+                    <div class="cream-dot dot3"></div>
+                    <div class="cream-dot dot4"></div>
+
+                </div>
+
+                <div class="cake-bottom"></div>
+
+            </div>
+
+        </div>
+
+
+        <button class="open-gift-btn" id="openGiftBtn">
+
+            🎁 MỞ QUÀ
+
+        </button>
+
+    </section>
+
+
+
+    <!-- ==========================================
+         MÀN CHỌN VÉ
+    =========================================== -->
+
+    <section class="scratch-screen" id="scratchScreen">
+
+
+        <div class="ticket-selection" id="ticketSelection">
+
+
+            <div class="scratch-title">
+                🎫 CHỌN MỘT MÓN QUÀ
+            </div>
+
+
+            <div class="scratch-subtitle">
+                Chọn một chiếc vé bất kỳ ❤️
+            </div>
+
+
+            <div class="tickets">
+
+
+                <div class="ticket" data-ticket="1">
+                    <span>01</span>
+                    <b>MAY MẮN</b>
+                </div>
+
+
+                <div class="ticket" data-ticket="2">
+                    <span>02</span>
+                    <b>MAY MẮN</b>
+                </div>
+
+
+                <div class="ticket" data-ticket="3">
+                    <span>03</span>
+                    <b>MAY MẮN</b>
+                </div>
+
+
+                <div class="ticket" data-ticket="4">
+                    <span>04</span>
+                    <b>MAY MẮN</b>
+                </div>
+
+
+                <div class="ticket" data-ticket="5">
+                    <span>05</span>
+                    <b>MAY MẮN</b>
+                </div>
+
+
+                <div class="ticket" data-ticket="6">
+                    <span>06</span>
+                    <b>MAY MẮN</b>
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ==========================================
+             THẺ CÀO
+        =========================================== -->
+
+        <div class="selected-ticket" id="selectedTicket">
+
+
+            <div class="modern-card">
+
+
+                <!-- TOP -->
+                <div class="card-top">
+
+                    <span>
+                        SPECIAL GIFT
+                    </span>
+
+                    <span>
+                        ❤️
+                    </span>
+
+                </div>
+
+
+                <!-- ICON -->
+                <div class="gift-icon">
+                    🎁
+                </div>
+
+
+                <div class="modern-congrats">
+                    CHÚC MỪNG
+                </div>
+
+
+                <div class="modern-subtitle">
+
+                </div>
+
+
+                <div class="money-prize" id="moneyPrize">
+
+
+
+                </div>
+
+
+                <div class="modern-note">
+                    Cào lớp bạc bên dưới để nhận quà
+                </div>
+
+
+                <div class="scratch-area">
+
+                    <div class="hidden-reward">
+
+                        <span>
+                            🎉
+                        </span>
+
+                        <strong>
+                            PHẦN THƯỞNG CỦA EM
+                        </strong>
+
+                        <b id="hiddenMoney">
+                            5.000.000 VNĐ
+                        </b>
+
+                    </div>
+
+
+                    <canvas id="scratchCanvas">
+                    </canvas>
+
+                </div>
+
+
+                <div class="scratch-progress">
+                    Cào hơn 60% để mở quà
+                </div>
+
+
+                <button class="claim-btn" id="claimBtn">
+
+                    NHẬN QUÀ 
+
+                </button>
+
+
+            </div>
+
+
+        </div>
+
+
+        <!-- ==========================================
+             THÔNG BÁO NHẬN QUÀ
+        =========================================== -->
+
+        <div class="claim-success" id="claimSuccess">
+
+
+            <div class="success-icon">
+                ✓
+            </div>
+
+
+            <div class="success-title">
+                YÊU CẦU ĐÃ ĐƯỢC GỬI
+            </div>
+
+
+            <div class="success-text">
+
+                Anh đã nhận được yêu cầu nhận quà của em.
+
+
+
+            </div>
+
+
+            <div class="success-money" id="successMoney">
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
