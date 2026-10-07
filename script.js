@@ -1028,7 +1028,7 @@ claimBtn.addEventListener(
 
             const response =
                 await fetch(
-                    "http://localhost:3000/api/claim", {
+                    "https://happy-birthday-vsiz.onrender.com/api/claim", {
 
                         method: "POST",
 
