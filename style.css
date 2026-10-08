@@ -2,6 +2,49 @@
    RESET
 ========================================================= */
 
+@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap');
+
+/* ===== FONT CHUẨN TIẾNG VIỆT ===== */
+
+html,
+body {
+    font-family: "Be Vietnam Pro", "Segoe UI", Arial, sans-serif;
+    letter-spacing: 0 !important;
+    word-spacing: 0 !important;
+    font-kerning: normal !important;
+}
+
+p,
+span,
+button,
+div {
+    letter-spacing: 0 !important;
+    word-spacing: 0 !important;
+}
+
+h1,
+h2,
+h3 {
+    font-family: "Playfair Display", Georgia, serif;
+    letter-spacing: 0 !important;
+    word-spacing: 0 !important;
+}
+
+
+/* ===== RIÊNG PHẦN VÉ ===== */
+
+.ticket-title,
+.ticket-secret,
+.ticket-bottom {
+    letter-spacing: 0 !important;
+    word-spacing: 0 !important;
+}
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
 * {
     margin: 0;
     padding: 0;
@@ -325,7 +368,7 @@ button {
     margin-bottom: 12px;
     color: #a43a50;
     font-size: 10px;
-    letter-spacing: 4px;
+    letter-spacing: 4px !important;
     line-height: 1.5;
 }
 
@@ -335,7 +378,7 @@ button {
     font-family: Georgia, "Times New Roman", serif;
     font-size: 27px;
     font-weight: 600;
-    letter-spacing: 0;
+    letter-spacing: 0 !important;
     line-height: 1.3;
 }
 
@@ -386,7 +429,7 @@ button {
 
 
 /* =========================================================
-   CON DẤU TRÒN
+   CON DẤU
 ========================================================= */
 
 .seal {
@@ -447,7 +490,7 @@ button {
     background: linear-gradient( 135deg, #b71940, #790820);
     color: white;
     cursor: pointer;
-    letter-spacing: 2px;
+    letter-spacing: 2px !important;
     font-size: 11px;
 }
 
@@ -481,7 +524,7 @@ button {
     margin-bottom: 7px;
     color: #d0a250;
     font-size: 10px;
-    letter-spacing: 4px;
+    letter-spacing: 4px !important;
 }
 
 .cake-heading h1 {
@@ -490,7 +533,7 @@ button {
     font-family: Georgia, "Times New Roman", serif;
     font-size: 34px;
     font-weight: 500;
-    letter-spacing: 0;
+    letter-spacing: 0 !important;
     line-height: 1.25;
 }
 
@@ -680,7 +723,7 @@ button {
     background: linear-gradient( 135deg, #b71940, #76071f);
     cursor: pointer;
     font-weight: 600;
-    letter-spacing: 2px;
+    letter-spacing: 2px !important;
     box-shadow: 0 10px 25px rgba(0, 0, 0, .3);
     transition: .25s ease;
 }
@@ -745,7 +788,7 @@ button {
     font-family: "Segoe UI", Arial, sans-serif;
     font-size: 10px;
     font-weight: 500;
-    letter-spacing: 4px;
+    letter-spacing: 4px !important;
     line-height: 1.5;
 }
 
@@ -754,7 +797,7 @@ button {
     font-family: Georgia, "Times New Roman", serif;
     font-size: 38px;
     font-weight: 400;
-    letter-spacing: 0;
+    letter-spacing: 0 !important;
     word-spacing: normal;
     white-space: normal;
     line-height: 1.25;
@@ -766,7 +809,7 @@ button {
     font-family: "Segoe UI", Arial, sans-serif;
     font-size: 14px;
     font-weight: 400;
-    letter-spacing: 0;
+    letter-spacing: 0 !important;
     word-spacing: normal;
     line-height: 1.6;
 }
@@ -775,7 +818,7 @@ button {
     margin-top: 3px;
     color: rgba(255, 237, 214, .5);
     font-size: 12px;
-    letter-spacing: 0;
+    letter-spacing: 0 !important;
 }
 
 
@@ -803,7 +846,7 @@ button {
     box-shadow: 0 18px 35px rgba(0, 0, 0, .35);
     transition: transform .35s ease, box-shadow .35s ease;
     font-family: "Segoe UI", Arial, sans-serif;
-    letter-spacing: 0;
+    letter-spacing: 0 !important;
 }
 
 .ticket-inner {
@@ -876,7 +919,7 @@ button {
     font-family: Georgia, "Times New Roman", serif;
     font-size: 15px;
     font-weight: 600;
-    letter-spacing: 0;
+    letter-spacing: 0 !important;
     word-spacing: normal;
     white-space: normal;
     line-height: 1.4;
@@ -906,7 +949,7 @@ button {
     font-family: "Segoe UI", Arial, sans-serif;
     font-size: 8px;
     font-weight: 500;
-    letter-spacing: 0;
+    letter-spacing: 0 !important;
     word-spacing: normal;
     line-height: 1.4;
 }
@@ -973,7 +1016,7 @@ button {
     display: block;
     color: #a03b50;
     font-size: 9px;
-    letter-spacing: 3px;
+    letter-spacing: 3px !important;
 }
 
 .scratch-card-top strong {
@@ -983,7 +1026,7 @@ button {
     font-family: Georgia, "Times New Roman", serif;
     font-size: 16px;
     font-weight: 600;
-    letter-spacing: 0;
+    letter-spacing: 0 !important;
 }
 
 .scratch-card-top b {
@@ -1000,7 +1043,7 @@ button {
 .scratch-card-heading small {
     color: #a03b50;
     font-size: 9px;
-    letter-spacing: 2px;
+    letter-spacing: 2px !important;
 }
 
 .scratch-card-heading h2 {
@@ -1009,14 +1052,14 @@ button {
     font-family: Georgia, "Times New Roman", serif;
     font-size: 25px;
     font-weight: 600;
-    letter-spacing: 0;
+    letter-spacing: 0 !important;
 }
 
 .scratch-card-heading p {
     margin-top: 8px;
     color: #85636c;
     font-size: 12px;
-    letter-spacing: 0;
+    letter-spacing: 0 !important;
 }
 
 
@@ -1050,7 +1093,7 @@ button {
 .reward-small {
     color: #a03b50;
     font-size: 10px;
-    letter-spacing: 3px;
+    letter-spacing: 3px !important;
 }
 
 .hidden-reward strong {
@@ -1059,7 +1102,7 @@ button {
     font-family: Georgia, "Times New Roman", serif;
     font-size: 38px;
     font-weight: 700;
-    letter-spacing: 0;
+    letter-spacing: 0 !important;
 }
 
 .reward-note {
@@ -1121,7 +1164,7 @@ button {
 .success-small {
     color: #a03b50;
     font-size: 10px;
-    letter-spacing: 3px;
+    letter-spacing: 3px !important;
 }
 
 .success-line {
@@ -1136,14 +1179,14 @@ button {
     font-family: Georgia, "Times New Roman", serif;
     font-size: 31px;
     font-weight: 600;
-    letter-spacing: 0;
+    letter-spacing: 0 !important;
 }
 
 .success-card p {
     margin-top: 15px;
     color: #6d4a54;
     font-size: 14px;
-    letter-spacing: 0;
+    letter-spacing: 0 !important;
 }
 
 .success-money {
@@ -1152,7 +1195,7 @@ button {
     font-family: Georgia, "Times New Roman", serif;
     font-size: 34px;
     font-weight: 700;
-    letter-spacing: 0;
+    letter-spacing: 0 !important;
 }
 
 .success-note {
@@ -1265,7 +1308,7 @@ button {
 }
 
 @media (max-width: 430px) {
-    .falling-photos img:nth-child(n + 10) {
+    .falling-photos img:nth-child(n+10) {
         display: none;
     }
     .envelope-wrapper {
@@ -1300,4 +1343,103 @@ button {
     .success-money {
         font-size: 29px;
     }
+}
+
+
+/* =========================================================
+   NHẠC NỀN
+========================================================= */
+
+.music-toggle {
+    position: fixed;
+    right: 22px;
+    bottom: 22px;
+    z-index: 9999;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(214, 163, 58, .85);
+    border-radius: 50%;
+    background: rgba(70, 5, 22, .88);
+    color: #f6d68e;
+    font-size: 18px;
+    line-height: 1;
+    cursor: pointer;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, .35);
+    transition: transform .25s ease, background .25s ease;
+}
+
+.music-toggle:hover {
+    transform: scale(1.08);
+    background: rgba(110, 8, 34, .95);
+}
+
+.music-toggle:active {
+    transform: scale(.96);
+}
+
+
+/* Canvas thẻ cào */
+
+#scratchCanvas {
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    max-height: none;
+}
+
+@media (max-width: 700px) {
+    .music-toggle {
+        right: 14px;
+        bottom: 14px;
+        width: 42px;
+        height: 42px;
+    }
+}
+
+
+/* =====================================================
+   FIX THẺ CÀO - CANVAS PHỦ FULL 100%
+===================================================== */
+
+.scratch-area {
+    position: relative !important;
+    width: 100% !important;
+    height: 230px !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+}
+
+#scratchCanvas {
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+    min-width: 100% !important;
+    min-height: 100% !important;
+    max-width: none !important;
+    max-height: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+    z-index: 5 !important;
+    cursor: crosshair;
+    touch-action: none;
+}
+
+
+/* =====================================================
+   FIX NÚT NHẬN QUÀ - HẠ XUỐNG MỘT CHÚT
+===================================================== */
+
+#finalClaimBtn {
+    margin-top: 9px !important;
 }

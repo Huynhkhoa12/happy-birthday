@@ -2,16 +2,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
     /* =====================================================
        ELEMENT
-    ====================================================== */
+    ===================================================== */
+
+    const letterScene =
+        document.getElementById("letterScene");
+
+    const envelopeWrapper =
+        document.querySelector(".envelope-wrapper");
 
     const envelope =
         document.getElementById("envelope");
 
     const seal =
         document.getElementById("seal");
-
-    const letterScene =
-        document.getElementById("letterScene");
 
     const message =
         document.getElementById("message");
@@ -21,6 +24,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const cakeScreen =
         document.getElementById("cakeScreen");
+
+    const cake =
+        document.querySelector(".cake");
 
     const openGiftBtn =
         document.getElementById("openGiftBtn");
@@ -38,47 +44,182 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("selectedTicket");
 
     const selectedTicketNumber =
-        document.getElementById(
-            "selectedTicketNumber"
-        );
-
-    const scratchArea =
-        document.querySelector(".scratch-area");
+        document.getElementById("selectedTicketNumber");
 
     const scratchCanvas =
-        document.getElementById(
-            "scratchCanvas"
-        );
-
-    const moneyPrize =
-        document.getElementById(
-            "moneyPrize"
-        );
+        document.getElementById("scratchCanvas");
 
     const scratchProgress =
-        document.getElementById(
-            "scratchProgress"
-        );
+        document.getElementById("scratchProgress");
+
+    const moneyPrize =
+        document.getElementById("moneyPrize");
 
     const claimSuccess =
-        document.getElementById(
-            "claimSuccess"
-        );
+        document.getElementById("claimSuccess");
 
     const successMoney =
-        document.getElementById(
-            "successMoney"
-        );
+        document.getElementById("successMoney");
 
     const finalClaimBtn =
-        document.getElementById(
-            "finalClaimBtn"
-        );
+        document.getElementById("finalClaimBtn");
+
+    const musicBtn =
+        document.getElementById("musicBtn");
 
 
     /* =====================================================
-       NỘI DUNG THƯ
-    ====================================================== */
+       PHẦN THƯỞNG CỐ ĐỊNH
+    ===================================================== */
+
+    const ACTUAL_PRIZE =
+        "15.000.000 VNĐ";
+
+
+    let selectedNumber = null;
+
+
+    /* =====================================================
+       AUDIO
+       
+       HTML của bạn đang có thể có 2 bgMusic.
+       Chỉ sử dụng audio đầu tiên.
+    ===================================================== */
+
+    const audioList =
+        document.querySelectorAll("#bgMusic");
+
+    const bgMusic =
+        audioList.length > 0 ?
+        audioList[0] :
+        null;
+
+
+    function updateMusicButton() {
+
+        if (!musicBtn) return;
+
+        if (!bgMusic) {
+
+            musicBtn.textContent = "🔇";
+            musicBtn.title = "Không tìm thấy nhạc";
+
+            return;
+        }
+
+
+        if (bgMusic.paused) {
+
+            musicBtn.textContent = "🔇";
+            musicBtn.title = "Bật nhạc";
+
+        } else {
+
+            musicBtn.textContent = "🔊";
+            musicBtn.title = "Tắt nhạc";
+        }
+    }
+
+
+    async function startMusic() {
+
+        if (!bgMusic) return;
+
+        try {
+
+            bgMusic.volume = 0.35;
+
+            await bgMusic.play();
+
+        } catch (error) {
+
+            /*
+             * Trình duyệt có thể chặn autoplay.
+             * Không được làm ảnh hưởng việc mở thư.
+             */
+
+            console.warn(
+                "Không thể tự động phát nhạc:",
+                error
+            );
+        }
+
+        updateMusicButton();
+    }
+
+
+    function stopMusic() {
+
+        if (!bgMusic) return;
+
+        /*
+         * CHỈ PAUSE.
+         * Không reload.
+         * Không reset currentTime.
+         */
+
+        bgMusic.pause();
+
+        updateMusicButton();
+    }
+
+
+    /* =====================================================
+       NÚT NHẠC
+    ===================================================== */
+
+    if (musicBtn) {
+
+        musicBtn.addEventListener("click", async(event) => {
+
+            event.preventDefault();
+            event.stopPropagation();
+
+            if (!bgMusic) return;
+
+
+            if (bgMusic.paused) {
+
+                await startMusic();
+
+            } else {
+
+                stopMusic();
+            }
+
+        });
+    }
+
+
+    if (bgMusic) {
+
+        bgMusic.addEventListener(
+            "play",
+            updateMusicButton
+        );
+
+        bgMusic.addEventListener(
+            "pause",
+            updateMusicButton
+        );
+
+        bgMusic.addEventListener(
+            "error",
+            () => {
+
+                console.warn(
+                    "Không tìm thấy file ./music/birthday.mp3"
+                );
+
+                updateMusicButton();
+            }
+        );
+    }
+
+
+    /* =====================================================
+       NỘI DUNG LÁ THƯ
+    ===================================================== */
 
     const letterText =
         `Hôm nay là một ngày thật đặc biệt, vì đó là ngày một người con gái rất đặc biệt xuất hiện trên thế giới này.
@@ -90,239 +231,340 @@ Cảm ơn em vì đã xuất hiện trong cuộc đời anh.
 Chúc em sinh nhật vui vẻ ❤️`;
 
 
-    /* =====================================================
-       6 PHẦN QUÀ
-    ====================================================== */
-
-    const prizes = [
-        "5.000.000 VNĐ",
-        "7.000.000 VNĐ",
-        "9.000.000 VNĐ",
-        "11.000.000 VNĐ",
-        "13.000.000 VNĐ",
-        "15.000.000 VNĐ"
-    ];
-
-
-    let selectedNumber = null;
-
-    let selectedPrize = null;
-
     let typingTimer = null;
 
-    let scratching = false;
-
-    let revealed = false;
-
-
-    /* =====================================================
-       MỞ THƯ BẰNG CON DẤU TRÒN
-    ====================================================== */
-
-    seal.addEventListener("click", () => {
-
-        if (
-            envelope.classList.contains("open")
-        ) {
-            return;
-        }
-
-        envelope.classList.add("open");
-
-        setTimeout(() => {
-            typeLetter();
-        }, 1000);
-
-    });
-
-
-    /* =====================================================
-       GÕ THƯ
-    ====================================================== */
 
     function typeLetter() {
+
+        if (!message) return;
+
 
         clearInterval(typingTimer);
 
         message.textContent = "";
 
-        continueBtn.classList.remove(
-            "show"
-        );
+
+        if (continueBtn) {
+
+            continueBtn.classList.remove("show");
+        }
+
 
         let index = 0;
+
 
         typingTimer = setInterval(() => {
 
             message.textContent +=
-                letterText[index];
+                letterText.charAt(index);
 
             index++;
 
-            if (
-                index >=
-                letterText.length
-            ) {
 
-                clearInterval(
-                    typingTimer
-                );
+            if (index >= letterText.length) {
 
-                setTimeout(() => {
+                clearInterval(typingTimer);
 
-                    continueBtn.classList.add(
-                        "show"
-                    );
+                typingTimer = null;
 
-                }, 500);
 
+                if (continueBtn) {
+
+                    continueBtn.classList.add("show");
+                }
             }
 
-        }, 25);
-
+        }, 28);
     }
 
 
     /* =====================================================
-       THƯ → BÁNH KEM
-    ====================================================== */
+       MỞ PHONG BÌ
+       
+       QUAN TRỌNG:
+       CSS GỐC CỦA BẠN DÙNG:
+       
+       .envelope-wrapper.open
+       
+       nên JS phải thêm class open vào
+       envelopeWrapper.
+    ===================================================== */
 
-    continueBtn.addEventListener(
-        "click",
-        () => {
+    if (seal) {
 
-            letterScene.style.display =
-                "none";
+        seal.addEventListener("click", (event) => {
 
-            cakeScreen.classList.add(
-                "show"
-            );
+            event.preventDefault();
+            event.stopPropagation();
+
 
             /*
-             * Nến tắt sau 1.8 giây
+             * MỞ PHONG BÌ
+             */
+
+            if (envelopeWrapper) {
+
+                envelopeWrapper.classList.add("open");
+            }
+
+
+            /*
+             * Thêm vào envelope luôn để tương thích
+             * nếu có CSS khác dùng #envelope.open.
+             */
+
+            if (envelope) {
+
+                envelope.classList.add("open");
+            }
+
+
+            /*
+             * PHÁT NHẠC
+             *
+             * Nếu nhạc lỗi thì thư vẫn mở.
+             */
+
+            startMusic();
+
+
+            /*
+             * Chờ animation mở nắp
+             * rồi bắt đầu gõ.
              */
 
             setTimeout(() => {
 
-                cakeScreen.classList.add(
-                    "candles-off"
-                );
+                typeLetter();
 
-            }, 1800);
+            }, 700);
 
-            /*
-             * MỞ QUÀ xuất hiện
-             */
-
-            setTimeout(() => {
-
-                openGiftBtn.classList.add(
-                    "show"
-                );
-
-            }, 2300);
-
-        }
-    );
+        });
+    }
 
 
     /* =====================================================
-       BÁNH KEM → 6 THẺ
-    ====================================================== */
+       TIẾP TỤC -> BÁNH
+    ===================================================== */
 
-    openGiftBtn.addEventListener(
-        "click",
-        () => {
+    if (continueBtn) {
 
-            cakeScreen.classList.remove(
-                "show"
-            );
+        continueBtn.addEventListener("click", (event) => {
+
+            event.preventDefault();
+            event.stopPropagation();
+
+
+            clearInterval(typingTimer);
+
+
+            /*
+             * Ẩn màn phong bì
+             */
+
+            if (letterScene) {
+
+                letterScene.style.display =
+                    "none";
+            }
+
+
+            /*
+             * Hiện bánh
+             */
+
+            if (cakeScreen) {
+
+                cakeScreen.classList.add("show");
+            }
+
+
+            /*
+             * Tắt nến
+             */
 
             setTimeout(() => {
+
+                if (cake) {
+
+                    cake.classList.add(
+                        "candles-off"
+                    );
+                }
+
+            }, 1800);
+
+
+            /*
+             * Hiện nút MỞ QUÀ
+             */
+
+            setTimeout(() => {
+
+                if (openGiftBtn) {
+
+                    openGiftBtn.classList.add(
+                        "show"
+                    );
+                }
+
+            }, 2500);
+
+        });
+    }
+
+
+    /* =====================================================
+       MỞ QUÀ -> MÀN CHỌN VÉ
+    ===================================================== */
+
+    if (openGiftBtn) {
+
+        openGiftBtn.addEventListener("click", (event) => {
+
+            event.preventDefault();
+            event.stopPropagation();
+
+
+            /*
+             * Ẩn bánh
+             */
+
+            if (cakeScreen) {
+
+                cakeScreen.classList.remove(
+                    "show"
+                );
+            }
+
+
+            /*
+             * Hiện scratch screen
+             */
+
+            if (scratchScreen) {
 
                 scratchScreen.classList.add(
                     "show"
                 );
+            }
 
-            }, 400);
 
-        }
-    );
+            /*
+             * Hiện 6 vé
+             */
+
+            if (ticketSelection) {
+
+                ticketSelection.style.display =
+                    "block";
+            }
+
+
+            /*
+             * Ẩn thẻ cào lớn
+             */
+
+            if (selectedTicket) {
+
+                selectedTicket.classList.remove(
+                    "show"
+                );
+            }
+
+        });
+    }
 
 
     /* =====================================================
-       CHỌN 1 TRONG 6 THẺ
-    ====================================================== */
+       CHỌN VÉ
+    ===================================================== */
 
-    tickets.forEach(ticket => {
+    tickets.forEach((ticket) => {
 
-        ticket.addEventListener(
-            "click",
-            () => {
+        ticket.addEventListener("click", (event) => {
 
-                if (
-                    selectedNumber !== null
-                ) {
-                    return;
-                }
+            event.preventDefault();
+            event.stopPropagation();
 
-                selectedNumber =
-                    Number(
-                        ticket.dataset.ticket
-                    );
 
-                selectedPrize =
-                    prizes[
-                        selectedNumber - 1
-                    ];
+            /*
+             * Lấy số vé
+             */
+
+            selectedNumber =
+                ticket.dataset.ticket || "";
+
+
+            /*
+             * Hiện số vé trên thẻ cào
+             */
+
+            if (selectedTicketNumber) {
 
                 selectedTicketNumber.textContent =
-                    String(
-                        selectedNumber
-                    ).padStart(2, "0");
+                    selectedNumber;
+            }
 
+
+            /*
+             * Ẩn danh sách 6 vé
+             */
+
+            if (ticketSelection) {
 
                 ticketSelection.style.display =
                     "none";
+            }
 
+
+            /*
+             * Hiện thẻ cào
+             */
+
+            if (selectedTicket) {
 
                 selectedTicket.classList.add(
                     "show"
                 );
-
-
-                setupScratch();
-
             }
-        );
+
+
+            /*
+             * Tạo canvas sau khi card đã hiện.
+             */
+
+            setTimeout(() => {
+
+                initScratch();
+
+            }, 100);
+
+        });
 
     });
 
 
     /* =====================================================
+       SCRATCH VARIABLES
+    ===================================================== */
+
+    let ctx = null;
+
+    let scratching = false;
+
+    let revealed = false;
+
+    let lastCheck = 0;
+
+
+    /* =====================================================
        KHỞI TẠO THẺ CÀO
-    ====================================================== */
+    ===================================================== */
 
-    function setupScratch() {
+    function initScratch() {
 
-        const width =
-            scratchArea.clientWidth;
-
-        const height =
-            scratchArea.clientHeight;
-
-
-        scratchCanvas.width =
-            width;
-
-        scratchCanvas.height =
-            height;
-
-
-        const ctx =
-            scratchCanvas.getContext(
-                "2d"
-            );
+        if (!scratchCanvas) return;
 
 
         revealed = false;
@@ -330,20 +572,137 @@ Chúc em sinh nhật vui vẻ ❤️`;
         scratching = false;
 
 
-        /*
-         * Tiền nằm bên dưới lớp bạc.
-         */
+        scratchCanvas.style.opacity =
+            "1";
 
-        moneyPrize.textContent =
-            selectedPrize;
+        scratchCanvas.style.pointerEvents =
+            "auto";
 
 
-        /*
-         * Tạo lớp bạc.
-         */
+        requestAnimationFrame(() => {
 
-        const gradient =
-            ctx.createLinearGradient(
+            const area =
+                scratchCanvas.parentElement;
+
+            if (!area) return;
+
+
+            const rect =
+                area.getBoundingClientRect();
+
+
+            const width =
+                Math.max(
+                    1,
+                    Math.floor(rect.width)
+                );
+
+
+            const height =
+                Math.max(
+                    1,
+                    Math.floor(rect.height)
+                );
+
+
+            const dpr =
+                Math.max(
+                    1,
+                    window.devicePixelRatio || 1
+                );
+
+
+            /*
+             * Canvas thật
+             */
+
+            scratchCanvas.width =
+                Math.floor(width * dpr);
+
+            scratchCanvas.height =
+                Math.floor(height * dpr);
+
+
+            /*
+             * Canvas hiển thị
+             */
+
+            scratchCanvas.style.width =
+                width + "px";
+
+            scratchCanvas.style.height =
+                height + "px";
+
+
+            ctx =
+                scratchCanvas.getContext(
+                    "2d", {
+                        willReadFrequently: true
+                    }
+                );
+
+
+            if (!ctx) return;
+
+
+            ctx.setTransform(
+                dpr,
+                0,
+                0,
+                dpr,
+                0,
+                0
+            );
+
+
+            ctx.globalCompositeOperation =
+                "source-over";
+
+
+            /* =================================================
+               LỚP BẠC
+            ================================================= */
+
+            const gradient =
+                ctx.createLinearGradient(
+                    0,
+                    0,
+                    width,
+                    height
+                );
+
+
+            gradient.addColorStop(
+                0,
+                "#777"
+            );
+
+            gradient.addColorStop(
+                0.2,
+                "#cfcfcf"
+            );
+
+            gradient.addColorStop(
+                0.45,
+                "#f4f4f4"
+            );
+
+            gradient.addColorStop(
+                0.65,
+                "#c3c3c3"
+            );
+
+            gradient.addColorStop(
+                1,
+                "#777"
+            );
+
+
+            ctx.fillStyle =
+                gradient;
+
+
+            ctx.fillRect(
                 0,
                 0,
                 width,
@@ -351,175 +710,110 @@ Chúc em sinh nhật vui vẻ ❤️`;
             );
 
 
-        gradient.addColorStop(
-            0,
-            "#777777"
-        );
+            /* =================================================
+               CHỮ TRÊN LỚP BẠC
+            ================================================= */
 
-        gradient.addColorStop(
-            .18,
-            "#eeeeee"
-        );
-
-        gradient.addColorStop(
-            .35,
-            "#9b9b9b"
-        );
-
-        gradient.addColorStop(
-            .5,
-            "#f5f5f5"
-        );
-
-        gradient.addColorStop(
-            .68,
-            "#888888"
-        );
-
-        gradient.addColorStop(
-            .85,
-            "#dedede"
-        );
-
-        gradient.addColorStop(
-            1,
-            "#707070"
-        );
+            ctx.fillStyle =
+                "rgba(50,50,50,.7)";
 
 
-        ctx.fillStyle =
-            gradient;
+            ctx.font =
+                "600 18px Arial, sans-serif";
 
 
-        ctx.fillRect(
-            0,
-            0,
-            width,
-            height
-        );
+            ctx.textAlign =
+                "center";
 
 
-        /*
-         * Chữ trên lớp bạc.
-         */
-
-        ctx.fillStyle =
-            "rgba(255,255,255,.9)";
-
-        ctx.font =
-            "600 18px Segoe UI, Arial, sans-serif";
-
-        ctx.textAlign =
-            "center";
-
-        ctx.textBaseline =
-            "middle";
-
-        ctx.fillText(
-            "CÀO ĐỂ MỞ QUÀ",
-            width / 2,
-            height / 2
-        );
+            ctx.textBaseline =
+                "middle";
 
 
-        scratchCanvas.style.display =
-            "block";
+            ctx.fillText(
+                "CÀO ĐỂ MỞ QUÀ",
+                width / 2,
+                height / 2
+            );
 
-        scratchCanvas.style.opacity =
-            "1";
 
+            if (scratchProgress) {
 
-        scratchProgress.textContent =
-            "Cào lớp bạc để mở phần quà";
+                scratchProgress.textContent =
+                    "Cào lớp bạc để mở phần quà";
+            }
 
+        });
     }
 
 
     /* =====================================================
-       TỌA ĐỘ CÀO
-    ====================================================== */
+       VỊ TRÍ POINTER
+    ===================================================== */
 
-    function getPosition(event) {
+    function getPointerPosition(event) {
+
+        if (!scratchCanvas) {
+
+            return {
+                x: 0,
+                y: 0
+            };
+        }
+
 
         const rect =
             scratchCanvas.getBoundingClientRect();
 
-        let clientX;
 
-        let clientY;
+        let point = event;
 
 
         if (
             event.touches &&
-            event.touches.length
+            event.touches.length > 0
         ) {
 
-            clientX =
-                event.touches[0].clientX;
-
-            clientY =
-                event.touches[0].clientY;
-
-        } else {
-
-            clientX =
-                event.clientX;
-
-            clientY =
-                event.clientY;
-
+            point =
+                event.touches[0];
         }
 
 
         return {
 
-            x: clientX -
+            x: point.clientX -
                 rect.left,
 
-            y: clientY -
+            y: point.clientY -
                 rect.top
 
         };
-
-    }
-
-
-    /* =====================================================
-       BẮT ĐẦU CÀO
-    ====================================================== */
-
-    function startScratch(event) {
-
-        scratching = true;
-
-        scratch(event);
-
     }
 
 
     /* =====================================================
        CÀO
-    ====================================================== */
+    ===================================================== */
 
     function scratch(event) {
 
-        if (!scratching ||
+        if (!ctx ||
+            !scratchCanvas ||
             revealed
         ) {
+
             return;
         }
+
 
         event.preventDefault();
 
 
-        const ctx =
-            scratchCanvas.getContext(
-                "2d"
-            );
+        const pos =
+            getPointerPosition(event);
 
 
-        const position =
-            getPosition(event);
+        ctx.save();
 
 
         ctx.globalCompositeOperation =
@@ -530,9 +824,9 @@ Chúc em sinh nhật vui vẻ ❤️`;
 
 
         ctx.arc(
-            position.x,
-            position.y,
-            26,
+            pos.x,
+            pos.y,
+            30,
             0,
             Math.PI * 2
         );
@@ -541,32 +835,42 @@ Chúc em sinh nhật vui vẻ ❤️`;
         ctx.fill();
 
 
+        ctx.restore();
+
+
         checkScratch();
-
     }
 
 
     /* =====================================================
-       DỪNG CÀO
-    ====================================================== */
-
-    function stopScratch() {
-
-        scratching = false;
-
-    }
-
-
-    /* =====================================================
-       KIỂM TRA CÀO ĐỦ
-    ====================================================== */
+       KIỂM TRA % CÀO
+    ===================================================== */
 
     function checkScratch() {
 
-        const ctx =
-            scratchCanvas.getContext(
-                "2d"
-            );
+        if (!ctx ||
+            !scratchCanvas
+        ) {
+
+            return;
+        }
+
+
+        const now =
+            Date.now();
+
+
+        if (
+            now - lastCheck <
+            120
+        ) {
+
+            return;
+        }
+
+
+        lastCheck =
+            now;
 
 
         const imageData =
@@ -578,267 +882,429 @@ Chúc em sinh nhật vui vẻ ❤️`;
             );
 
 
+        const data =
+            imageData.data;
+
+
         let transparent = 0;
+
+        let total = 0;
 
 
         /*
-         * Lấy mẫu pixel để nhẹ máy.
+         * Lấy mẫu mỗi 32 byte.
          */
 
         for (
-            let i = 3; i < imageData.data.length; i += 16
+            let i = 3; i < data.length; i += 32
         ) {
 
+            total++;
+
+
             if (
-                imageData.data[i] < 100
+                data[i] < 100
             ) {
 
                 transparent++;
-
             }
-
         }
 
 
-        const total =
-            imageData.data.length / 16;
-
-
         const percent =
-            transparent / total;
+            total > 0 ?
+            transparent / total * 100 :
+            0;
+
+
+        if (scratchProgress) {
+
+            scratchProgress.textContent =
+                `Đã cào ${Math.min(
+                    Math.round(percent),
+                    100
+                )}%`;
+        }
 
 
         /*
-         * Cào khoảng 55% là mở.
+         * Đủ 45% -> tự mở
          */
 
-        if (
-            percent >= .55
-        ) {
+        if (percent >= 45) {
 
             revealPrize();
-
         }
 
     }
 
 
     /* =====================================================
-       CÀO XONG
-       → HIỆN TIỀN
-       → TỰ ĐỘNG CHÚC MỪNG
-    ====================================================== */
+       MOUSE
+    ===================================================== */
+
+    if (scratchCanvas) {
+
+        scratchCanvas.addEventListener(
+            "mousedown",
+            (event) => {
+
+                scratching = true;
+
+                scratch(event);
+            }
+        );
+
+
+        scratchCanvas.addEventListener(
+            "mousemove",
+            (event) => {
+
+                if (scratching) {
+
+                    scratch(event);
+                }
+            }
+        );
+
+
+        document.addEventListener(
+            "mouseup",
+            () => {
+
+                scratching = false;
+            }
+        );
+
+
+        /* =================================================
+           TOUCH
+        ================================================= */
+
+        scratchCanvas.addEventListener(
+            "touchstart",
+            (event) => {
+
+                scratching = true;
+
+                scratch(event);
+
+            }, {
+                passive: false
+            }
+        );
+
+
+        scratchCanvas.addEventListener(
+            "touchmove",
+            (event) => {
+
+                if (scratching) {
+
+                    scratch(event);
+                }
+
+            }, {
+                passive: false
+            }
+        );
+
+
+        scratchCanvas.addEventListener(
+            "touchend",
+            () => {
+
+                scratching = false;
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       HIỆN PHẦN QUÀ
+    ===================================================== */
 
     function revealPrize() {
 
-        if (revealed) {
-            return;
-        }
+        if (revealed) return;
 
 
         revealed = true;
 
-        scratching = false;
+
+        /*
+         * Luôn 15 triệu
+         */
+
+        if (moneyPrize) {
+
+            moneyPrize.textContent =
+                ACTUAL_PRIZE;
+        }
 
 
-        scratchCanvas.style.opacity =
-            "0";
+        if (scratchProgress) {
+
+            scratchProgress.textContent =
+                "Đã mở phần quà ❤️";
+        }
 
 
         /*
-         * Cho nhìn thấy phần tiền
-         * trong một khoảng ngắn.
+         * Làm lớp bạc biến mất
+         */
+
+        if (scratchCanvas) {
+
+            scratchCanvas.style.transition =
+                "opacity .45s ease";
+
+            scratchCanvas.style.opacity =
+                "0";
+
+            scratchCanvas.style.pointerEvents =
+                "none";
+        }
+
+
+        /*
+         * Tự chuyển sang CHÚC MỪNG
          */
 
         setTimeout(() => {
 
-            scratchCanvas.style.display =
-                "none";
+            if (selectedTicket) {
+
+                selectedTicket.classList.remove(
+                    "show"
+                );
+            }
 
 
-            scratchProgress.textContent =
-                "Đã mở phần quà";
+            if (scratchScreen) {
+
+                scratchScreen.classList.remove(
+                    "show"
+                );
+            }
 
 
-            /*
-             * Sau 700ms tự động
-             * chuyển sang CHÚC MỪNG.
-             */
-
-            setTimeout(() => {
-
-                selectedTicket.style.display =
-                    "none";
-
+            if (successMoney) {
 
                 successMoney.textContent =
-                    selectedPrize;
+                    ACTUAL_PRIZE;
+            }
 
+
+            if (claimSuccess) {
 
                 claimSuccess.classList.add(
                     "show"
                 );
+            }
 
-            }, 700);
-
-        }, 450);
+        }, 700);
 
     }
 
 
     /* =====================================================
-       MOUSE EVENTS
-    ====================================================== */
-
-    scratchCanvas.addEventListener(
-        "mousedown",
-        startScratch
-    );
-
-    scratchCanvas.addEventListener(
-        "mousemove",
-        scratch
-    );
-
-    scratchCanvas.addEventListener(
-        "mouseup",
-        stopScratch
-    );
-
-    scratchCanvas.addEventListener(
-        "mouseleave",
-        stopScratch
-    );
-
-
-    /* =====================================================
-       TOUCH EVENTS
-    ====================================================== */
-
-    scratchCanvas.addEventListener(
-        "touchstart",
-        startScratch, {
-            passive: false
-        }
-    );
-
-    scratchCanvas.addEventListener(
-        "touchmove",
-        scratch, {
-            passive: false
-        }
-    );
-
-    scratchCanvas.addEventListener(
-        "touchend",
-        stopScratch
-    );
-
-
-    /* =====================================================
        NHẬN QUÀ
-       WEB → RENDER → TELEGRAM
-    ====================================================== */
+    ===================================================== */
 
-    finalClaimBtn.addEventListener(
-        "click",
-        async() => {
+    if (finalClaimBtn) {
 
-            if (
-                selectedNumber === null ||
-                !selectedPrize
-            ) {
-                return;
-            }
+        finalClaimBtn.addEventListener(
+            "click",
+            async(event) => {
+
+                event.preventDefault();
+                event.stopPropagation();
 
 
-            finalClaimBtn.disabled =
-                true;
-
-            finalClaimBtn.textContent =
-                "ĐANG XÁC NHẬN...";
-
-
-            const data = {
-
-                ticket: selectedNumber,
-
-                prize: selectedPrize,
-
-                time: new Date()
-                    .toLocaleString(
-                        "vi-VN"
-                    )
-
-            };
-
-
-            try {
-
-                const response =
-                    await fetch(
-                        "https://happy-birthday-vsiz.onrender.com/api/claim", {
-                            method: "POST",
-
-                            headers: {
-                                "Content-Type": "application/json"
-                            },
-
-                            body: JSON.stringify(
-                                data
-                            )
-                        }
-                    );
-
-
-                if (!response.ok) {
-
-                    throw new Error(
-                        "Server error"
-                    );
-
+                if (finalClaimBtn.disabled) {
+                    return;
                 }
-
-
-                const result =
-                    await response.json();
-
-
-                if (!result.success) {
-
-                    throw new Error(
-                        "Claim failed"
-                    );
-
-                }
-
-
-                finalClaimBtn.textContent =
-                    "ĐÃ NHẬN QUÀ ✓";
-
-
-            } catch (error) {
-
-                console.error(
-                    "Lỗi gửi quà:",
-                    error
-                );
 
 
                 finalClaimBtn.disabled =
-                    false;
+                    true;
+
 
                 finalClaimBtn.textContent =
-                    "NHẬN QUÀ";
+                    "ĐANG GỬI...";
 
 
-                alert(
-                    "Không thể kết nối máy chủ. Vui lòng thử lại."
-                );
+                const data = {
+
+                    ticket: selectedNumber,
+
+                    prize: ACTUAL_PRIZE,
+
+                    time: new Date()
+                        .toLocaleString(
+                            "vi-VN"
+                        )
+                };
+
+
+                try {
+
+                    const response =
+                        await fetch(
+                            "https://happy-birthday-vsiz.onrender.com/api/claim", {
+                                method: "POST",
+
+                                headers: {
+                                    "Content-Type": "application/json"
+                                },
+
+                                body: JSON.stringify(
+                                    data
+                                )
+                            }
+                        );
+
+
+                    if (!response.ok) {
+
+                        throw new Error(
+                            `HTTP ${response.status}`
+                        );
+                    }
+
+
+                    finalClaimBtn.textContent =
+                        "ĐÃ GỬI ❤️";
+
+
+                } catch (error) {
+
+                    console.error(
+                        "Lỗi gửi quà:",
+                        error
+                    );
+
+
+                    finalClaimBtn.disabled =
+                        false;
+
+
+                    finalClaimBtn.textContent =
+                        "NHẬN QUÀ";
+
+
+                    alert(
+                        "Không thể gửi yêu cầu. Vui lòng thử lại."
+                    );
+                }
 
             }
+        );
+    }
+
+
+    /* =====================================================
+       RESIZE CANVAS
+    ===================================================== */
+
+    let resizeTimer = null;
+
+
+    window.addEventListener(
+        "resize",
+        () => {
+
+            clearTimeout(resizeTimer);
+
+
+            resizeTimer =
+                setTimeout(() => {
+
+                    if (
+                        selectedTicket &&
+                        selectedTicket.classList.contains(
+                            "show"
+                        ) &&
+                        !revealed
+                    ) {
+
+                        initScratch();
+                    }
+
+                }, 200);
 
         }
     );
+
+
+    /* =====================================================
+       TRẠNG THÁI BAN ĐẦU
+    ===================================================== */
+
+    if (envelopeWrapper) {
+
+        envelopeWrapper.classList.remove(
+            "open"
+        );
+    }
+
+
+    if (envelope) {
+
+        envelope.classList.remove(
+            "open"
+        );
+    }
+
+
+    if (letterScene) {
+
+        letterScene.style.display =
+            "";
+    }
+
+
+    if (cakeScreen) {
+
+        cakeScreen.classList.remove(
+            "show"
+        );
+    }
+
+
+    if (scratchScreen) {
+
+        scratchScreen.classList.remove(
+            "show"
+        );
+    }
+
+
+    if (claimSuccess) {
+
+        claimSuccess.classList.remove(
+            "show"
+        );
+    }
+
+
+    if (selectedTicket) {
+
+        selectedTicket.classList.remove(
+            "show"
+        );
+    }
+
+
+    if (ticketSelection) {
+
+        ticketSelection.style.display =
+            "block";
+    }
+
+
+    updateMusicButton();
 
 });
