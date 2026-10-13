@@ -1398,6 +1398,184 @@ body::after {
 
 
 /* =========================================================
+   GHI ĐIỀU ƯỚC
+========================================================= */
+
+.wish-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgba(12, 2, 7, .62);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity .7s ease, visibility 0s linear .7s;
+}
+
+.wish-overlay.show {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transition-delay: 0s;
+}
+
+.wish-paper {
+    position: relative;
+    width: min(380px, 100%);
+    padding: 30px 26px 22px;
+    border-radius: 4px;
+    text-align: center;
+    color: var(--ink);
+    background: radial-gradient(120% 60% at 50% 0%, rgba(255, 255, 255, .85), transparent 60%), linear-gradient(160deg, #fffdf7, #f3e3cb);
+    box-shadow: 0 30px 70px rgba(0, 0, 0, .55), 0 0 0 1px rgba(140, 90, 40, .2);
+    transform: translateY(30px) rotate(-2.5deg) scale(.92);
+    transition: transform 1s cubic-bezier(.2, .8, .2, 1);
+}
+
+.wish-overlay.show .wish-paper {
+    transform: rotate(-1deg);
+}
+
+.wish-paper::before {
+    content: "";
+    position: absolute;
+    inset: 9px;
+    border: 1px solid rgba(190, 140, 70, .4);
+    pointer-events: none;
+}
+
+.wish-label {
+    display: block;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 5px;
+    color: #b0584c;
+}
+
+.wish-paper h2 {
+    margin: 6px 0 4px;
+    font-size: 28px;
+    font-weight: 700;
+    color: #8e0d2b;
+}
+
+.wish-sub {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 16px;
+    color: #7a4a3a;
+}
+
+.wish-paper textarea {
+    width: 100%;
+    margin-top: 14px;
+    padding: 4px 6px 0;
+    resize: none;
+    border: 0;
+    outline: 0;
+    color: #3a1420;
+    font-family: "Caveat", "Segoe Script", cursive;
+    font-size: 25px;
+    font-weight: 600;
+    line-height: 32px;
+    text-align: left;
+    background: repeating-linear-gradient(transparent 0 31px, rgba(150, 100, 60, .3) 31px 32px);
+    background-attachment: local;
+}
+
+.wish-paper textarea::placeholder {
+    color: rgba(110, 60, 50, .4);
+}
+
+.wish-meta {
+    margin-top: 4px;
+    text-align: right;
+    font-size: 11px;
+    color: #a08070;
+}
+
+.wish-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    margin-top: 12px;
+}
+
+.wish-send {
+    padding: 14px 34px;
+    font-size: 13px;
+}
+
+.wish-send:disabled {
+    filter: grayscale(.6) brightness(.9);
+}
+
+.wish-skip {
+    cursor: pointer;
+    font-size: 12.5px;
+    color: #8a6a5a;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.wish-skip:hover {
+    color: #8e0d2b;
+}
+
+
+/* gửi đi: gập giấy rồi bay lên */
+
+.wish-overlay.sending {
+    background: rgba(12, 2, 7, .25);
+    transition: background 1s ease .6s, opacity .8s ease 1.6s, visibility 0s linear 2.4s;
+    opacity: 0;
+}
+
+.wish-overlay.sending .wish-paper {
+    animation: wishFly 2.2s cubic-bezier(.5, 0, .3, 1) forwards;
+    pointer-events: none;
+}
+
+.wish-overlay.sending .wish-paper>* {
+    transition: opacity .5s ease;
+    opacity: 0;
+}
+
+@keyframes wishFly {
+    0% {
+        transform: rotate(-1deg);
+        filter: none;
+    }
+    35% {
+        transform: scale(.55, .5) rotate(4deg);
+        border-radius: 8px;
+    }
+    55% {
+        transform: scale(.28, .3) rotate(-8deg);
+        filter: drop-shadow(0 0 18px #ffd27a);
+    }
+    100% {
+        transform: translateY(-62vh) scale(.06) rotate(25deg);
+        filter: drop-shadow(0 0 30px #ffd27a);
+        opacity: 0;
+    }
+}
+
+@media (max-height: 560px) {
+    .wish-paper {
+        padding: 20px 22px 16px;
+    }
+}
+
+
+/* =========================================================
    CHỌN THẺ
 ========================================================= */
 

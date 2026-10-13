@@ -1,3 +1,4 @@
+const { wishHandler } = require("./serverwish");
 const express = require("express");
 const cors = require("cors");
 const fs = require("fs");
@@ -290,7 +291,7 @@ app.get(
 // ===============================
 // CHẠY SERVER
 // ===============================
-
+app.post("/api/wish", wishHandler);
 app.listen(
     PORT,
     "0.0.0.0",
@@ -302,3 +303,4 @@ app.listen(
 
     }
 );
+module.exports.sendTelegram = sendTelegram;

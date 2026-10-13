@@ -621,7 +621,7 @@ Chúc em sinh nhật vui vẻ ❤️`;
             }
 
             resetCake();
-            armCake();
+            setTimeout(showWish, 1300);
         });
     }
 
@@ -632,7 +632,131 @@ Chúc em sinh nhật vui vẻ ❤️`;
     let cakeBlown = false;
     let cakeAuto = null;
 
+    // ---- Ghi điều ước vào giấy ----
+    const wishOverlay = $("wishOverlay");
+    const wishForm = $("wishForm");
+    const wishText = $("wishText");
+    const wishCount = $("wishCount");
+    const wishSend = $("wishSend");
+    const wishSkip = $("wishSkip");
+    let wishDone = false;
+    let wishValue = "";
+
+    // Gửi điều ước về máy chủ (máy chủ chuyển tiếp sang Telegram).
+    // Chạy ngầm, không chặn hiệu ứng; thử lại 1 lần nếu máy chủ đang ngủ.
+    const API_BASE = "https://happy-birthday-vsiz.onrender.com";
+
+    // Đánh thức máy chủ miễn phí sớm để lúc gửi không phải chờ.
+    fetch(API_BASE, { mode: "no-cors" }).catch(() => {});
+
+    async function sendWish(text) {
+        const body = JSON.stringify({
+            wish: text,
+            time: new Date().toLocaleString("vi-VN")
+        });
+
+        for (let attempt = 0; attempt < 2; attempt++) {
+            try {
+                const controller = new AbortController();
+                const timer = setTimeout(() => controller.abort(), 60000);
+                const response = await fetch(API_BASE + "/api/wish", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body,
+                    signal: controller.signal,
+                    keepalive: true
+                });
+                clearTimeout(timer);
+                if (response.ok) return true;
+            } catch (error) {
+                console.warn("Gửi điều ước lần " + (attempt + 1) + " lỗi:", error);
+            }
+            await new Promise((r) => setTimeout(r, 2000));
+        }
+
+        return false;
+    }
+
+    function showWish() {
+        if (!wishOverlay || wishDone) return;
+        wishOverlay.classList.remove("sending");
+        wishOverlay.classList.add("show");
+        wishOverlay.setAttribute("aria-hidden", "false");
+        setTimeout(() => { if (wishText) wishText.focus({ preventScroll: true }); }, 700);
+    }
+
+    function finishWish(sent) {
+        if (wishDone) return;
+        wishDone = true;
+
+        if (cakeSub) {
+            cakeSub.textContent = sent ?
+                "Điều ước đã bay lên rồi ✨ Giờ hãy thổi nến nhé" :
+                "Giờ hãy thổi nến nhé ✨";
+        }
+
+        if (cakeHint) cakeHint.style.opacity = "";
+        armCake();
+    }
+
+    function hideWish() {
+        wishOverlay.classList.remove("show", "sending");
+        wishOverlay.setAttribute("aria-hidden", "true");
+    }
+
+    if (wishText) {
+        wishText.addEventListener("input", () => {
+            const n = wishText.value.length;
+            wishCount.textContent = n + "/160";
+            wishSend.disabled = wishText.value.trim().length === 0;
+        });
+    }
+
+    if (wishForm) {
+        wishForm.addEventListener("submit", (event) => {
+            event.preventDefault();
+            wishValue = wishText.value.trim();
+            if (!wishValue || wishDone) return;
+
+            wishSend.disabled = true;
+            wishText.blur();
+            sendWish(wishValue);
+            wishOverlay.classList.add("sending");
+
+            // paper bay lên: rắc kim tuyến theo đường bay
+            const start = centerOf(wishForm);
+            const fly = REDUCED ? 0 : 1100;
+
+            setTimeout(() => {
+                FX.confetti(start.x, start.y, 40, { power: 6, spread: 6.28, gravity: .05 });
+            }, fly * .5);
+            setTimeout(() => {
+                FX.confetti(start.x, start.y * .4, 60, { power: 8, spread: 6.28, angle: -1.57, gravity: .08 });
+                FX.show(900, 3);
+            }, fly + 200);
+
+            setTimeout(() => {
+                hideWish();
+                finishWish(true);
+            }, REDUCED ? 200 : 2500);
+        });
+    }
+
+    if (wishSkip) {
+        wishSkip.addEventListener("click", () => {
+            hideWish();
+            finishWish(false);
+        });
+    }
+
     function resetCake() {
+        wishDone = false;
+        wishValue = "";
+        if (wishText) { wishText.value = "";
+            wishCount.textContent = "0/160";
+            wishSend.disabled = true; }
+        if (wishOverlay) hideWish();
+        if (cakeHint) cakeHint.style.opacity = "0";
         cakeBlown = false;
         clearTimeout(cakeAuto);
         if (cake) cake.classList.remove("candles-off");
@@ -646,7 +770,7 @@ Chúc em sinh nhật vui vẻ ❤️`;
     }
 
     function blowCandles() {
-        if (cakeBlown) return;
+        if (cakeBlown || !wishDone) return;
         cakeBlown = true;
         clearTimeout(cakeAuto);
 
