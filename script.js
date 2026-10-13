@@ -1,3 +1,292 @@
+// =================================================================
+// HIỆU ỨNG NỀN VÀ PHÁO HOA (canvas)
+// =================================================================
+const FX = (() => {
+    const reduced = window.matchMedia &&
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const GOLDS = ["#f9e7ae", "#f5dc9e", "#d4ad5a", "#fff2c6", "#ffffff"];
+    const MIX = ["#f9e7ae", "#d4ad5a", "#ee6a8c", "#ffb3c4", "#fff6e6", "#ff8fa8"];
+    const dpr = () => Math.min(2, window.devicePixelRatio || 1);
+
+    const ambient = document.getElementById("fxAmbient");
+    const burst = document.getElementById("fxBurst");
+    const actx = ambient ? ambient.getContext("2d") : null;
+    const bctx = burst ? burst.getContext("2d") : null;
+    let W = 0,
+        H = 0;
+
+    function resize() {
+        W = window.innerWidth;
+        H = window.innerHeight;
+        [ambient, burst].forEach((c) => {
+            if (!c) return;
+            c.width = Math.round(W * dpr());
+            c.height = Math.round(H * dpr());
+        });
+        if (actx) actx.setTransform(dpr(), 0, 0, dpr(), 0, 0);
+        if (bctx) bctx.setTransform(dpr(), 0, 0, dpr(), 0, 0);
+    }
+
+    resize();
+    window.addEventListener("resize", resize);
+
+    const rnd = (a, b) => a + Math.random() * (b - a);
+    const pick = (list) => list[Math.floor(Math.random() * list.length)];
+
+    // ---------- bụi vàng bay lơ lửng ----------
+    const dust = [];
+    const DUST = reduced ? 0 : (W < 600 ? 34 : 64);
+
+    for (let i = 0; i < DUST; i++) {
+        dust.push({
+            x: Math.random() * W,
+            y: Math.random() * H,
+            r: rnd(.6, 2.1),
+            vy: rnd(.1, .4),
+            vx: rnd(-.12, .12),
+            ph: Math.random() * 6.28,
+            sp: rnd(.6, 1.8),
+            c: pick(GOLDS)
+        });
+    }
+
+    function drawDust(t) {
+        if (!actx) return;
+        actx.clearRect(0, 0, W, H);
+
+        for (const p of dust) {
+            p.y -= p.vy;
+            p.x += p.vx + Math.sin(t / 1800 + p.ph) * .12;
+
+            if (p.y < -6) { p.y = H + 6;
+                p.x = Math.random() * W; }
+            if (p.x < -6) p.x = W + 6;
+            if (p.x > W + 6) p.x = -6;
+
+            const a = .25 + .55 * (.5 + .5 * Math.sin(t / 1000 * p.sp + p.ph));
+
+            actx.globalAlpha = a;
+            actx.fillStyle = p.c;
+            actx.shadowColor = p.c;
+            actx.shadowBlur = p.r * 5;
+            actx.beginPath();
+            actx.arc(p.x, p.y, p.r, 0, 6.2832);
+            actx.fill();
+        }
+
+        actx.globalAlpha = 1;
+        actx.shadowBlur = 0;
+    }
+
+    // ---------- confetti / tia lửa / trái tim ----------
+    const parts = [];
+    let running = false;
+    let last = 0;
+
+    function add(p) {
+        if (parts.length < 900) parts.push(p);
+        if (!running) { running = true;
+            last = performance.now();
+            requestAnimationFrame(burstLoop); }
+    }
+
+    function confetti(x, y, count, o) {
+        if (reduced) return;
+        o = Object.assign({ spread: Math.PI * 2, angle: -Math.PI / 2, power: 9, colors: MIX, gravity: .22 }, o);
+
+        for (let i = 0; i < count; i++) {
+            const a = o.angle + (Math.random() - .5) * o.spread;
+            const v = rnd(.35, 1) * o.power;
+            const kind = Math.random();
+
+            add({
+                k: kind < .12 ? "heart" : kind < .5 ? "rect" : "strip",
+                x,
+                y,
+                vx: Math.cos(a) * v,
+                vy: Math.sin(a) * v,
+                g: o.gravity,
+                drag: .985,
+                w: rnd(5, 10),
+                h: rnd(3, 6),
+                rot: Math.random() * 6.28,
+                vr: rnd(-.25, .25),
+                tilt: Math.random() * 6.28,
+                c: pick(o.colors),
+                life: rnd(90, 170),
+                age: 0
+            });
+        }
+    }
+
+    function firework(x, y, color) {
+        if (reduced) return;
+        const n = 46;
+        const base = color || pick(MIX);
+
+        for (let i = 0; i < n; i++) {
+            const a = (i / n) * 6.2832 + rnd(-.05, .05);
+            const v = rnd(2.2, 5.6);
+
+            add({
+                k: "spark",
+                x,
+                y,
+                vx: Math.cos(a) * v,
+                vy: Math.sin(a) * v,
+                g: .05,
+                drag: .965,
+                r: rnd(1.2, 2.4),
+                c: Math.random() < .3 ? "#ffffff" : base,
+                life: rnd(46, 80),
+                age: 0
+            });
+        }
+
+        // quầng sáng ngắn
+        add({ k: "flash", x, y, r: 6, life: 14, age: 0, c: base });
+    }
+
+    function rain(ms) {
+        if (reduced) return;
+        const end = performance.now() + ms;
+
+        (function tick() {
+            if (performance.now() > end) return;
+            confetti(rnd(0, W), -10, 3, { spread: .8, angle: Math.PI / 2, power: 3.4, gravity: .06 });
+            setTimeout(tick, 80);
+        })();
+    }
+
+    function show(ms, count) {
+        if (reduced) return;
+        const n = count || 6;
+
+        for (let i = 0; i < n; i++) {
+            setTimeout(() => firework(rnd(W * .15, W * .85), rnd(H * .12, H * .5)), i * (ms / n) + rnd(0, 120));
+        }
+    }
+
+    function burstLoop(now) {
+        const dt = Math.min(2.2, (now - last) / 16.67);
+        last = now;
+
+        bctx.clearRect(0, 0, W, H);
+
+        for (let i = parts.length - 1; i >= 0; i--) {
+            const p = parts[i];
+            p.age += dt;
+
+            if (p.age >= p.life) { parts.splice(i, 1); continue; }
+
+            const f = 1 - p.age / p.life;
+
+            if (p.k === "flash") {
+                const r = p.r + p.age * 5;
+                const g = bctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, r);
+                g.addColorStop(0, "rgba(255,255,255," + (.7 * f) + ")");
+                g.addColorStop(1, "rgba(255,230,160,0)");
+                bctx.fillStyle = g;
+                bctx.beginPath();
+                bctx.arc(p.x, p.y, r, 0, 6.2832);
+                bctx.fill();
+                continue;
+            }
+
+            p.vx *= Math.pow(p.drag || 1, dt);
+            p.vy = p.vy * Math.pow(p.drag || 1, dt) + p.g * dt;
+            p.x += p.vx * dt;
+            p.y += p.vy * dt;
+
+            if (p.k === "spark") {
+                bctx.globalAlpha = Math.min(1, f * 1.6);
+                bctx.fillStyle = p.c;
+                bctx.shadowColor = p.c;
+                bctx.shadowBlur = 10;
+                bctx.beginPath();
+                bctx.arc(p.x, p.y, p.r * (.4 + f * .8), 0, 6.2832);
+                bctx.fill();
+                // vệt đuôi
+                bctx.globalAlpha *= .35;
+                bctx.beginPath();
+                bctx.arc(p.x - p.vx * 1.6, p.y - p.vy * 1.6, p.r * .6 * f, 0, 6.2832);
+                bctx.fill();
+                bctx.shadowBlur = 0;
+                continue;
+            }
+
+            p.rot += p.vr * dt;
+            p.tilt += .12 * dt;
+
+            bctx.globalAlpha = Math.min(1, f * 2.2);
+            bctx.fillStyle = p.c;
+            bctx.save();
+            bctx.translate(p.x, p.y);
+            bctx.rotate(p.rot);
+
+            if (p.k === "heart") {
+                bctx.font = Math.round(p.w * 1.7) + "px serif";
+                bctx.textAlign = "center";
+                bctx.textBaseline = "middle";
+                bctx.fillText("♥", 0, 0);
+            } else {
+                // lật 3D giả bằng scaleY theo tilt
+                bctx.scale(1, Math.cos(p.tilt));
+                if (p.k === "strip") bctx.fillRect(-p.w, -1.2, p.w * 2, 2.4);
+                else bctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+            }
+
+            bctx.restore();
+        }
+
+        bctx.globalAlpha = 1;
+
+        if (parts.length) {
+            requestAnimationFrame(burstLoop);
+        } else {
+            running = false;
+            bctx.clearRect(0, 0, W, H);
+        }
+    }
+
+    // vòng lặp nền, tạm dừng khi tab bị ẩn
+    function ambientLoop(t) {
+        if (!document.hidden) drawDust(t);
+        requestAnimationFrame(ambientLoop);
+    }
+
+    if (DUST) requestAnimationFrame(ambientLoop);
+
+    return { confetti, firework, show, rain, size: () => ({ W, H }) };
+})();
+
+// Vị trí giữa phần tử, dùng làm tâm pháo
+function centerOf(el) {
+    if (!el) return { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+    const r = el.getBoundingClientRect();
+    return { x: r.left + r.width / 2, y: r.top + r.height / 2 };
+}
+
+// Ảnh nền trôi: rải ngẫu nhiên vị trí, cỡ, tốc độ
+(function scatterPhotos() {
+    const imgs = [...document.querySelectorAll(".falling-photos img")];
+    const small = window.innerWidth < 600;
+
+    imgs.forEach((img, i) => {
+        const w = (small ? 54 : 70) + Math.random() * (small ? 26 : 50);
+
+        img.style.setProperty("--x", (4 + (i / imgs.length) * 90 + Math.random() * 4 - 2).toFixed(1) + "%");
+        img.style.setProperty("--w", w.toFixed(0) + "px");
+        img.style.setProperty("--dur", (26 + Math.random() * 20).toFixed(1) + "s");
+        img.style.setProperty("--delay", (-Math.random() * 40).toFixed(1) + "s");
+        img.style.setProperty("--r0", (Math.random() * 24 - 12).toFixed(1) + "deg");
+        img.style.setProperty("--r1", (Math.random() * 30 - 15).toFixed(1) + "deg");
+        img.style.setProperty("--blur", (1 + Math.random() * 2.4).toFixed(1) + "px");
+        img.style.setProperty("--op", (.08 + Math.random() * .1).toFixed(2));
+        img.addEventListener("error", () => img.remove());
+    });
+})();
+
 document.addEventListener("DOMContentLoaded", () => {
     // =============================================
     // 1. CÁC PHẦN TỬ HTML
@@ -35,7 +324,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // =============================================
     // 2. ĐẾM NGƯỢC
-    // Đang để 10 giây để thử nghiệm.
+    // Đếm 10 giây, tính từ lúc mở trang.
     // =============================================
     const BIRTHDAY_TIME = Date.now() + 10 * 1000;
 
@@ -150,12 +439,15 @@ document.addEventListener("DOMContentLoaded", () => {
         musicBtn.textContent = !bgMusic || bgMusic.paused ? "🔇" : "🔊";
     }
 
+    let musicStarted = false;
+
     async function startMusic() {
         if (!bgMusic) return;
 
         try {
             bgMusic.volume = 0.35;
             await bgMusic.play();
+            musicStarted = true;
         } catch (error) {
             console.warn("Trình duyệt chưa cho phép phát nhạc:", error);
         }
@@ -207,6 +499,7 @@ Chúc em sinh nhật vui vẻ ❤️`;
 
         clearInterval(typingTimer);
         message.textContent = "";
+        message.classList.add("typing");
 
         if (continueBtn) {
             continueBtn.classList.remove("show");
@@ -221,6 +514,7 @@ Chúc em sinh nhật vui vẻ ❤️`;
             if (index >= letterText.length) {
                 clearInterval(typingTimer);
                 typingTimer = null;
+                message.classList.remove("typing");
 
                 if (continueBtn) {
                     continueBtn.classList.add("show");
@@ -232,11 +526,53 @@ Chúc em sinh nhật vui vẻ ❤️`;
     // =============================================
     // 6. MỞ PHONG BÌ
     // =============================================
+    const REDUCED = window.matchMedia &&
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    // Mốc thời gian (ms): thư trượt ra, thư bay ra giữa, bắt đầu gõ chữ
+    const T = REDUCED ? { rise: 0, reading: 300, type: 700 } : { rise: 1050, reading: 2350, type: 3800 };
+
+    let envelopeOpened = false;
+
+    // Hạt vàng và trái tim bay ra từ một điểm trên phong bì
+    function burst(count, top) {
+        if (!envelopeWrapper || REDUCED) return;
+
+        const fragment = document.createDocumentFragment();
+
+        for (let i = 0; i < count; i++) {
+            const el = document.createElement("i");
+            const isHeart = i % 5 === 0;
+            const angle = Math.random() * Math.PI * 2;
+            const distance = 90 + Math.random() * 190;
+
+            el.className = "burst" + (isHeart ? " heart" : "");
+            if (isHeart) el.textContent = "♥";
+
+            el.style.top = top;
+            el.style.setProperty("--dx", Math.cos(angle) * distance + "px");
+            el.style.setProperty("--dy", Math.sin(angle) * distance * 0.8 - 30 + "px");
+            el.style.setProperty("--dur", (0.9 + Math.random() * 0.8).toFixed(2) + "s");
+            el.style.setProperty("--delay", (Math.random() * 0.15).toFixed(2) + "s");
+            el.style.setProperty("--s", (0.6 + Math.random() * 0.9).toFixed(2));
+            el.style.setProperty("--size", Math.round(10 + Math.random() * 10) + "px");
+            el.addEventListener("animationend", () => el.remove());
+
+            fragment.appendChild(el);
+        }
+
+        envelopeWrapper.appendChild(fragment);
+    }
+
     if (seal) {
         seal.addEventListener("click", (event) => {
             event.preventDefault();
             event.stopPropagation();
 
+            if (envelopeOpened) return;
+            envelopeOpened = true;
+
+            // 1. Con dấu vỡ, nắp phong bì mở ra
             if (envelopeWrapper) {
                 envelopeWrapper.classList.add("open");
             }
@@ -245,8 +581,24 @@ Chúc em sinh nhật vui vẻ ❤️`;
                 envelope.classList.add("open");
             }
 
+            burst(18, "calc(50% + 24px)"); { const c = centerOf(seal);
+                FX.confetti(c.x, c.y, 34, { power: 7, spread: 5.4, angle: -1.57 }); }
             startMusic();
-            setTimeout(typeLetter, 700);
+
+            // 2. Thư trượt ra khỏi phong bì
+            setTimeout(() => {
+                if (envelopeWrapper) envelopeWrapper.classList.add("rise");
+            }, T.rise);
+
+            // 3. Thư bay ra giữa màn hình, phong bì mờ dần
+            setTimeout(() => {
+                if (envelopeWrapper) envelopeWrapper.classList.add("reading");
+                burst(26, "50%");
+                FX.show(1200, 3);
+            }, T.reading);
+
+            // 4. Gõ chữ
+            setTimeout(typeLetter, T.type);
         });
     }
 
@@ -268,41 +620,346 @@ Chúc em sinh nhật vui vẻ ❤️`;
                 cakeScreen.classList.add("show");
             }
 
-            if (cake) {
-                cake.classList.remove("candles-off");
-            }
-
-            if (openGiftBtn) {
-                openGiftBtn.classList.remove("show");
-            }
-
-            setTimeout(() => {
-                if (cake) {
-                    cake.classList.add("candles-off");
-                }
-            }, 1800);
-
-            setTimeout(() => {
-                if (openGiftBtn) {
-                    openGiftBtn.classList.add("show");
-                }
-            }, 2500);
+            resetCake();
+            armCake();
         });
+    }
+
+    // Thổi nến: chạm vào bánh (tự thổi sau 9 giây nếu chưa chạm)
+    const cakeStage = $("cakeStage");
+    const cakeHint = $("cakeHint");
+    const cakeSub = $("cakeSub");
+    let cakeBlown = false;
+    let cakeAuto = null;
+
+    function resetCake() {
+        cakeBlown = false;
+        clearTimeout(cakeAuto);
+        if (cake) cake.classList.remove("candles-off");
+        if (cakeStage) cakeStage.classList.remove("done");
+        if (openGiftBtn) openGiftBtn.classList.remove("show");
+        if (cakeSub) cakeSub.textContent = "Hãy nhắm mắt và ước một điều nhé ❤️";
+    }
+
+    function armCake() {
+        cakeAuto = setTimeout(blowCandles, 9000);
+    }
+
+    function blowCandles() {
+        if (cakeBlown) return;
+        cakeBlown = true;
+        clearTimeout(cakeAuto);
+
+        if (cake) cake.classList.add("candles-off");
+        if (cakeStage) cakeStage.classList.add("done");
+        if (cakeSub) cakeSub.textContent = "Điều ước của em sẽ thành sự thật ✨";
+
+        const c = centerOf(cakeStage);
+        FX.confetti(c.x, c.y - 70, 90, { power: 11, spread: 2.6, angle: -1.57, gravity: .2 });
+        setTimeout(() => FX.show(1400, 4), 350);
+
+        setTimeout(() => {
+            if (openGiftBtn) openGiftBtn.classList.add("show");
+        }, 1100);
+    }
+
+    if (cakeStage) {
+        cakeStage.addEventListener("click", blowCandles);
     }
 
     // =============================================
     // 8. XÀO 6 THẺ
+    // Lật úp -> gom thành chồng -> xào chia đôi 3 lượt
+    // -> chia bài về chỗ -> lật lại.
     // =============================================
     let ticketShuffleReady = false;
-    let shuffleTimers = [];
+    let shuffleRun = 0;
 
-    function clearShuffleTimers() {
-        shuffleTimers.forEach((timer) => clearTimeout(timer));
-        shuffleTimers = [];
+    const ticketNote = ticketSelection ?
+        ticketSelection.querySelector(".ticket-note") :
+        null;
+    const NOTE_DEFAULT = ticketNote ? ticketNote.textContent.trim() : "";
+    const CAN_ANIMATE = typeof Element.prototype.animate === "function";
+
+    const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+    const rand = (min, max) => min + Math.random() * (max - min);
+
+    function shuffled(list) {
+        const copy = list.slice();
+
+        for (let i = copy.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [copy[i], copy[j]] = [copy[j], copy[i]];
+        }
+
+        return copy;
     }
 
-    function startTicketShuffle() {
-        clearShuffleTimers();
+    function setNote(text, live) {
+        if (!ticketNote) return;
+
+        ticketNote.textContent = text;
+        ticketNote.classList.toggle("is-live", Boolean(live));
+    }
+
+    // Đưa mọi thẻ về trạng thái gốc.
+    function resetTickets() {
+        tickets.forEach((ticket) => {
+            if (typeof ticket.getAnimations === "function") {
+                ticket.getAnimations().forEach((animation) => animation.cancel());
+            }
+
+            ticket.classList.remove("is-back");
+            ticket.style.transform = "";
+            ticket.style.transition = "";
+            ticket.style.zIndex = "";
+        });
+
+        if (ticketsContainer) {
+            ticketsContainer
+                .querySelectorAll(".deck-glow, .burst")
+                .forEach((element) => element.remove());
+        }
+    }
+
+    // Hạt vàng và trái tim bắn ra từ giữa chồng bài.
+    function deckSparkles(count) {
+        if (!ticketsContainer) return;
+
+        const maxDistance = Math.min(190, window.innerWidth * 0.4);
+        const fragment = document.createDocumentFragment();
+
+        for (let i = 0; i < count; i++) {
+            const element = document.createElement("i");
+            const isHeart = i % 4 === 0;
+            const angle = Math.random() * Math.PI * 2;
+            const distance = rand(60, maxDistance);
+
+            element.className = "burst" + (isHeart ? " heart" : "");
+            if (isHeart) element.textContent = "♥";
+
+            element.style.top = "50%";
+            element.style.setProperty("--dx", Math.cos(angle) * distance + "px");
+            element.style.setProperty("--dy", Math.sin(angle) * distance * 0.7 + "px");
+            element.style.setProperty("--dur", rand(0.8, 1.4).toFixed(2) + "s");
+            element.style.setProperty("--delay", rand(0, 0.12).toFixed(2) + "s");
+            element.style.setProperty("--s", rand(0.6, 1.4).toFixed(2));
+            element.style.setProperty("--size", Math.round(rand(10, 18)) + "px");
+            element.addEventListener("animationend", () => element.remove());
+
+            fragment.appendChild(element);
+        }
+
+        ticketsContainer.appendChild(fragment);
+    }
+
+    async function playShuffle(alive) {
+        const box = ticketsContainer.getBoundingClientRect();
+        const centerX = box.left + box.width / 2;
+        const centerY = box.top + box.height / 2;
+        const spread = Math.min(tickets[0].offsetWidth * 0.62, window.innerWidth * 0.26);
+        const STACK = 0.8;
+        const ids = tickets.map((_, index) => index);
+
+        // Độ dời để mỗi thẻ về giữa khu vực thẻ.
+        const home = tickets.map((ticket) => {
+            const rect = ticket.getBoundingClientRect();
+
+            return {
+                x: centerX - (rect.left + rect.width / 2),
+                y: centerY - (rect.top + rect.height / 2)
+            };
+        });
+
+        const poses = tickets.map(() => ({ x: 0, y: 0, r: 0, s: 1, ry: 0 }));
+
+        tickets.forEach((ticket) => {
+            ticket.style.transition = "none";
+        });
+
+        const pose = (p) =>
+            `translate(${p.x.toFixed(1)}px, ${p.y.toFixed(1)}px) ` +
+            `rotate(${p.r.toFixed(1)}deg) scale(${p.s.toFixed(3)}) ` +
+            `perspective(900px) rotateY(${p.ry.toFixed(1)}deg)`;
+
+        // Di chuyển một thẻ sang tư thế mới, có nhấc lên một chút giữa đường.
+        function animateTo(index, target, options) {
+            const o = Object.assign({
+                duration: 500,
+                delay: 0,
+                easing: "cubic-bezier(.2,.8,.2,1)",
+                lift: 0,
+                spin: 0
+            }, options);
+
+            const from = poses[index];
+            const to = Object.assign({}, from, target);
+            const mid = {
+                x: (from.x + to.x) / 2,
+                y: (from.y + to.y) / 2 - o.lift,
+                r: (from.r + to.r) / 2 + o.spin,
+                s: Math.max(from.s, to.s) + (o.lift ? 0.05 : 0),
+                ry: (from.ry + to.ry) / 2
+            };
+
+            poses[index] = to;
+
+            const animation = tickets[index].animate(
+                [
+                    { transform: pose(from) },
+                    { transform: pose(mid) },
+                    { transform: pose(to) }
+                ], {
+                    duration: o.duration,
+                    delay: o.delay,
+                    easing: o.easing,
+                    fill: "both"
+                }
+            );
+
+            return animation.finished.catch(() => {});
+        }
+
+        // Lật thẻ; đổi mặt đúng lúc thẻ đứng nghiêng.
+        function flip(index, toBack, delay) {
+            setTimeout(() => {
+                if (alive()) tickets[index].classList.toggle("is-back", toBack);
+            }, delay + 280);
+
+            return animateTo(index, { ry: toBack ? 180 : 0 }, {
+                duration: 560,
+                delay,
+                easing: "ease-in-out",
+                lift: 14
+            });
+        }
+
+        const stackPose = (index, order) => ({
+            x: home[index].x + rand(-4, 4),
+            y: home[index].y - order * 3,
+            r: rand(-5, 5),
+            s: STACK,
+            ry: 180
+        });
+
+        const glow = document.createElement("div");
+        glow.className = "deck-glow";
+        ticketsContainer.prepend(glow);
+        void glow.offsetWidth;
+
+        // A. Lật úp lần lượt từng thẻ, rồi giấu mệnh giá.
+        await Promise.all(ids.map((i) => flip(i, true, i * 70)));
+        if (!alive()) return;
+
+        hideTicketPrices();
+        await wait(150);
+        if (!alive()) return;
+
+        // B. Gom thành một chồng ở giữa.
+        glow.classList.add("on");
+
+        let deck = ids.slice();
+
+        await Promise.all(deck.map((i, order) => {
+            tickets[i].style.zIndex = String(10 + order);
+
+            return animateTo(i, stackPose(i, order), {
+                duration: 650,
+                delay: order * 55,
+                lift: 20,
+                spin: rand(-8, 8)
+            });
+        }));
+        if (!alive()) return;
+
+        deckSparkles(10);
+
+        // C. Xào: chia đôi chồng bài, rồi chen xen kẽ vào nhau. Làm 3 lượt.
+        for (let round = 0; round < 3; round++) {
+            const half = deck.length / 2;
+            const left = deck.slice(0, half);
+            const right = deck.slice(half);
+            const splitOptions = {
+                duration: 280,
+                lift: 10,
+                easing: "cubic-bezier(.2,.9,.3,1)"
+            };
+
+            await Promise.all([
+                ...left.map((i, k) => animateTo(i, {
+                    x: home[i].x - spread,
+                    y: home[i].y - k * 4 - 8,
+                    r: -9 + k * 2,
+                    s: STACK,
+                    ry: 180
+                }, Object.assign({ delay: k * 20 }, splitOptions))),
+                ...right.map((i, k) => animateTo(i, {
+                    x: home[i].x + spread,
+                    y: home[i].y - k * 4 - 8,
+                    r: 9 - k * 2,
+                    s: STACK,
+                    ry: 180
+                }, Object.assign({ delay: k * 20 }, splitOptions)))
+            ]);
+            if (!alive()) return;
+
+            const first = round % 2 === 0 ? left : right;
+            const second = round % 2 === 0 ? right : left;
+
+            deck = [];
+            for (let k = 0; k < half; k++) {
+                deck.push(first[k], second[k]);
+            }
+
+            await Promise.all(deck.map((i, order) => {
+                setTimeout(() => {
+                    tickets[i].style.zIndex = String(10 + order);
+                }, order * 42);
+
+                return animateTo(i, stackPose(i, order), {
+                    duration: 280,
+                    delay: order * 42,
+                    lift: 16,
+                    spin: rand(-6, 6)
+                });
+            }));
+            if (!alive()) return;
+
+            deckSparkles(6);
+        }
+
+        // D. Chia bài: từng thẻ bay về đúng chỗ của mình.
+        await wait(180);
+        if (!alive()) return;
+
+        glow.classList.remove("on");
+
+        await Promise.all(shuffled(ids).map((i, order) =>
+            animateTo(i, { x: 0, y: 0, r: 0, s: 1, ry: 180 }, {
+                duration: 700,
+                delay: order * 100,
+                lift: 40,
+                spin: rand(-7, 7),
+                easing: "cubic-bezier(.2,.9,.25,1.1)"
+            })
+        ));
+        if (!alive()) return;
+
+        await wait(120);
+        if (!alive()) return;
+
+        // E. Lật lại mặt trước (không còn mệnh giá).
+        await Promise.all(ids.map((i) => flip(i, false, i * 70)));
+        if (!alive()) return;
+
+        deckSparkles(10);
+        await wait(250);
+    }
+
+    async function startTicketShuffle() {
+        const run = ++shuffleRun;
+        const alive = () => run === shuffleRun;
+
         ticketShuffleReady = false;
 
         if (!ticketsContainer || tickets.length === 0) {
@@ -310,53 +967,45 @@ Chúc em sinh nhật vui vẻ ❤️`;
             return;
         }
 
-        // Đưa các thẻ về vị trí gốc trước khi bắt đầu.
+        resetTickets();
+        ticketsContainer.classList.add("is-shuffling");
+
+        tickets.forEach((ticket) => {
+            ticket.style.pointerEvents = "none";
+        });
+
+        // Bước 1: hiện đầy đủ mệnh giá để người xem nhìn thấy.
+        showTicketPrices();
+        setNote("Đang xáo trộn các phần quà, em nhìn kỹ nhé...", true);
+
+        const fancy = CAN_ANIMATE && !REDUCED;
+
+        await wait(fancy ? 1500 : 600);
+        if (!alive()) return;
+
+        // Bước 2: lật úp, xào, chia bài, lật lại.
+        if (fancy) {
+            try {
+                await playShuffle(alive);
+            } catch (error) {
+                console.warn("Lỗi hiệu ứng xáo thẻ:", error);
+            }
+
+            if (!alive()) return;
+        }
+
+        // Bước 3: xong, trả thẻ về vị trí gốc và cho phép chọn.
+        hideTicketPrices();
+        resetTickets();
+
         ticketsContainer.classList.remove("is-shuffling");
 
         tickets.forEach((ticket) => {
-            ticket.classList.remove("flipped", "shuffling");
-            ticket.style.pointerEvents = "none";
-            ticket.style.transform = "";
-            ticket.style.order = "";
+            ticket.style.pointerEvents = "auto";
         });
 
-        // Bước 1: hiện đầy đủ mệnh giá.
-        showTicketPrices();
-
-        // Bước 2: chờ để người xem nhìn thấy tiền.
-        shuffleTimers.push(setTimeout(() => {
-            // Bước 3: lật úp thẻ.
-            tickets.forEach((ticket) => {
-                ticket.classList.add("flipped");
-            });
-
-            // Bước 4: chạy animation xào.
-            shuffleTimers.push(setTimeout(() => {
-                ticketsContainer.classList.add("is-shuffling");
-
-                tickets.forEach((ticket) => {
-                    ticket.classList.add("shuffling");
-                });
-
-                // Bước 5: xào xong, trở về mặt trước và vị trí ban đầu.
-                shuffleTimers.push(setTimeout(() => {
-                    tickets.forEach((ticket) => {
-                        ticket.classList.remove("shuffling", "flipped");
-
-                        ticket.style.transform = "";
-                        ticket.style.order = "";
-                        ticket.style.pointerEvents = "auto";
-                    });
-
-                    ticketsContainer.classList.remove("is-shuffling");
-
-                    // Chỉ xóa mệnh giá, không xóa ảnh hoặc nền thẻ.
-                    hideTicketPrices();
-
-                    ticketShuffleReady = true;
-                }, 2700));
-            }, 450));
-        }, 1500));
+        setNote(NOTE_DEFAULT, false);
+        ticketShuffleReady = true;
     }
 
     // =============================================
@@ -423,7 +1072,8 @@ Chúc em sinh nhật vui vẻ ❤️`;
 
             if (!ticketShuffleReady) return;
 
-            selectedNumber = ticket.dataset.ticket || "1";
+            selectedNumber = ticket.dataset.ticket || "1"; { const c = centerOf(ticket);
+                FX.confetti(c.x, c.y, 26, { power: 6, spread: 6.28 }); }
 
             if (selectedTicketNumber) {
                 selectedTicketNumber.textContent =
@@ -658,6 +1308,8 @@ Chúc em sinh nhật vui vẻ ❤️`;
         if (revealed) return;
 
         revealed = true;
+        FX.show(1500, 5); { const c = centerOf(scratchCanvas);
+            FX.confetti(c.x, c.y, 70, { power: 10, spread: 5, angle: -1.57 }); }
 
         if (moneyPrize) {
             moneyPrize.textContent = ACTUAL_PRIZE;
@@ -689,6 +1341,9 @@ Chúc em sinh nhật vui vẻ ❤️`;
             if (claimSuccess) {
                 claimSuccess.classList.add("show");
             }
+
+            FX.rain(3500);
+            FX.show(2400, 7);
         }, 700);
     }
 
@@ -711,6 +1366,13 @@ Chúc em sinh nhật vui vẻ ❤️`;
                 time: new Date().toLocaleString("vi-VN")
             };
 
+            // Máy chủ miễn phí có thể mất vài chục giây để khởi động.
+            const controller = new AbortController();
+            const abortTimer = setTimeout(() => controller.abort(), 60000);
+            const slowTimer = setTimeout(() => {
+                finalClaimBtn.textContent = "MÁY CHỦ ĐANG KHỞI ĐỘNG...";
+            }, 6000);
+
             try {
                 const response = await fetch(
                     "https://happy-birthday-vsiz.onrender.com/api/claim", {
@@ -718,7 +1380,8 @@ Chúc em sinh nhật vui vẻ ❤️`;
                         headers: {
                             "Content-Type": "application/json"
                         },
-                        body: JSON.stringify(data)
+                        body: JSON.stringify(data),
+                        signal: controller.signal
                     }
                 );
 
@@ -733,7 +1396,14 @@ Chúc em sinh nhật vui vẻ ❤️`;
                 finalClaimBtn.disabled = false;
                 finalClaimBtn.textContent = "NHẬN QUÀ";
 
-                alert("Không thể gửi yêu cầu. Vui lòng thử lại.");
+                alert(
+                    error.name === "AbortError" ?
+                    "Máy chủ phản hồi quá lâu. Vui lòng thử lại sau ít phút." :
+                    "Không thể gửi yêu cầu. Vui lòng thử lại."
+                );
+            } finally {
+                clearTimeout(abortTimer);
+                clearTimeout(slowTimer);
             }
         });
     }
@@ -761,7 +1431,7 @@ Chúc em sinh nhật vui vẻ ❤️`;
     // 19. TRẠNG THÁI BAN ĐẦU
     // =============================================
     if (envelopeWrapper) {
-        envelopeWrapper.classList.remove("open");
+        envelopeWrapper.classList.remove("open", "rise", "reading");
     }
 
     if (envelope) {
