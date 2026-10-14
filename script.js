@@ -58,8 +58,10 @@ const FX = (() => {
             p.y -= p.vy;
             p.x += p.vx + Math.sin(t / 1800 + p.ph) * .12;
 
-            if (p.y < -6) { p.y = H + 6;
-                p.x = Math.random() * W; }
+            if (p.y < -6) {
+                p.y = H + 6;
+                p.x = Math.random() * W;
+            }
             if (p.x < -6) p.x = W + 6;
             if (p.x > W + 6) p.x = -6;
 
@@ -85,9 +87,11 @@ const FX = (() => {
 
     function add(p) {
         if (parts.length < 900) parts.push(p);
-        if (!running) { running = true;
+        if (!running) {
+            running = true;
             last = performance.now();
-            requestAnimationFrame(burstLoop); }
+            requestAnimationFrame(burstLoop);
+        }
     }
 
     function confetti(x, y, count, o) {
@@ -147,6 +151,58 @@ const FX = (() => {
         add({ k: "flash", x, y, r: 6, life: 14, age: 0, c: base });
     }
 
+    // Pháo thăng thiên: bay từ đáy màn hình lên độ cao ty rồi nổ.
+    function rocket(x, ty, color, shape) {
+        if (reduced) return;
+        const g = .12;
+        const startY = H + 10;
+        const dist = Math.max(80, startY - ty);
+
+        add({
+            k: "rocket",
+            x,
+            y: startY,
+            vx: rnd(-.5, .5),
+            vy: -Math.sqrt(2 * g * dist),
+            g,
+            drag: 1,
+            r: 2.4,
+            c: color || pick(MIX),
+            shape: shape || "ring",
+            life: 600,
+            age: 0
+        });
+    }
+
+    // Pháo nổ hình trái tim
+    function heartBurst(x, y, color) {
+        if (reduced) return;
+        const base = color || "#ff8fa8";
+        const n = 70;
+
+        for (let i = 0; i < n; i++) {
+            const t = (i / n) * 6.2832;
+            const hx = 16 * Math.pow(Math.sin(t), 3);
+            const hy = -(13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t));
+
+            add({
+                k: "spark",
+                x,
+                y,
+                vx: hx * .3,
+                vy: hy * .3,
+                g: .03,
+                drag: .955,
+                r: rnd(1.4, 2.4),
+                c: Math.random() < .25 ? "#ffffff" : base,
+                life: rnd(70, 95),
+                age: 0
+            });
+        }
+
+        add({ k: "flash", x, y, r: 10, life: 16, age: 0, c: base });
+    }
+
     function rain(ms) {
         if (reduced) return;
         const end = performance.now() + ms;
@@ -197,6 +253,41 @@ const FX = (() => {
             p.vy = p.vy * Math.pow(p.drag || 1, dt) + p.g * dt;
             p.x += p.vx * dt;
             p.y += p.vy * dt;
+
+            if (p.k === "rocket") {
+                // tới đỉnh thì nổ
+                if (p.vy >= -.4) {
+                    parts.splice(i, 1);
+                    if (p.shape === "heart") heartBurst(p.x, p.y, p.c);
+                    else firework(p.x, p.y, p.c);
+                    continue;
+                }
+
+                bctx.globalAlpha = 1;
+                bctx.fillStyle = "#fff6e0";
+                bctx.shadowColor = p.c;
+                bctx.shadowBlur = 14;
+                bctx.beginPath();
+                bctx.arc(p.x, p.y, p.r, 0, 6.2832);
+                bctx.fill();
+                bctx.shadowBlur = 0;
+
+                // vệt lửa phía sau
+                add({
+                    k: "spark",
+                    x: p.x + rnd(-1, 1),
+                    y: p.y + 3,
+                    vx: rnd(-.3, .3),
+                    vy: rnd(.4, 1.2),
+                    g: .02,
+                    drag: .94,
+                    r: rnd(.6, 1.4),
+                    c: Math.random() < .5 ? "#ffd9a0" : p.c,
+                    life: rnd(14, 28),
+                    age: 0
+                });
+                continue;
+            }
 
             if (p.k === "spark") {
                 bctx.globalAlpha = Math.min(1, f * 1.6);
@@ -257,7 +348,7 @@ const FX = (() => {
 
     if (DUST) requestAnimationFrame(ambientLoop);
 
-    return { confetti, firework, show, rain, size: () => ({ W, H }) };
+    return { confetti, firework, rocket, heartBurst, show, rain, size: () => ({ W, H }) };
 })();
 
 // Vị trí giữa phần tử, dùng làm tâm pháo
@@ -324,9 +415,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // =============================================
     // 2. ĐẾM NGƯỢC
-    // Đếm 10 giây, tính từ lúc mở trang.
+    // Đếm ngược tới 0h ngày 12/01/2027 (giờ Việt Nam).
+    // Muốn test nhanh: bỏ // ở dòng test và thêm // vào dòng trên nó.
     // =============================================
-    const BIRTHDAY_TIME = Date.now() + 10 * 1000;
+    // const BIRTHDAY_TIME = new Date("2027-01-12T00:00:00+07:00").getTime(); // ngày thật
+    const BIRTHDAY_TIME = Date.now() + 10 * 1000; // TEST 10 giây
 
     let countdownTimer = null;
 
@@ -345,11 +438,153 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    // =============================================
+    // 2B. MÀN HÌNH HAPPY BIRTHDAY + PHÁO HOA
+    // =============================================
+    const hbScene = $("hbScene");
+    const hbBtn = $("hbBtn");
+    const HB_REDUCED = window.matchMedia &&
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let hbTimers = [];
+    let hbLoop = null;
+    let hbShown = false;
+
+    const hbRand = (a, b) => a + Math.random() * (b - a);
+    const HB_COLORS = ["#f9e7ae", "#ee6a8c", "#ffb3c4", "#d4ad5a", "#ff8fa8", "#fff6e6"];
+
+    // Tách chữ thành từng ký tự để hiện lần lượt
+    (function splitHbLetters() {
+        if (!hbScene) return;
+        let index = 0;
+
+        hbScene.querySelectorAll("[data-split]").forEach((line) => {
+            const text = line.textContent.trim();
+            line.textContent = "";
+
+            [...text].forEach((ch) => {
+                const span = document.createElement("span");
+                span.textContent = ch;
+                if (ch === " ") span.className = "hb-space";
+                span.style.setProperty("--i", index++);
+                line.appendChild(span);
+            });
+        });
+    })();
+
+    function hbLater(fn, ms) {
+        hbTimers.push(setTimeout(fn, ms));
+    }
+
+    function stopCelebration() {
+        hbTimers.forEach(clearTimeout);
+        hbTimers = [];
+        clearInterval(hbLoop);
+        hbLoop = null;
+    }
+
+    function showCelebration() {
+        if (countdownTimer !== null) {
+            clearInterval(countdownTimer);
+            countdownTimer = null;
+        }
+
+        if (birthdayCountdown) birthdayCountdown.style.display = "none";
+        if (letterScene) letterScene.style.display = "none";
+
+        // Không có màn hình này thì đi thẳng tới phong bì
+        if (!hbScene) {
+            showLetterScene();
+            return;
+        }
+
+        if (hbShown) return;
+        hbShown = true;
+
+        hbScene.classList.add("show");
+
+        if (HB_REDUCED) {
+            hbScene.classList.add("reveal", "ready");
+            return;
+        }
+
+        const size = () => FX.size();
+
+        // 1. Loạt pháo đầu tiên bắn lên
+        [0, 300, 600, 900, 1200, 1450].forEach((t, k) => {
+            hbLater(() => {
+                const { W, H } = size();
+                const x = W * (0.14 + (k % 6) * 0.145) + hbRand(-20, 20);
+                FX.rocket(x, H * hbRand(0.14, 0.34), HB_COLORS[k % HB_COLORS.length]);
+            }, t);
+        });
+
+        // 2. Pháo trái tim ở giữa + chữ hiện ra
+        hbLater(() => {
+            const { W, H } = size();
+            FX.rocket(W / 2, H * 0.24, "#ff8fa8", "heart");
+        }, 1700);
+
+        hbLater(() => hbScene.classList.add("reveal"), 2450);
+
+        // 3. Màn kết bùng nổ
+        hbLater(() => {
+            const { W, H } = size();
+            FX.confetti(W / 2, H * 0.4, 110, { power: 12, spread: 6.28, gravity: .16 });
+            FX.rocket(W * 0.25, H * 0.2, "#f9e7ae");
+            FX.rocket(W * 0.75, H * 0.2, "#ffb3c4");
+        }, 3100);
+
+        hbLater(() => FX.rain(3000), 3400);
+
+        // 4. Hiện nút sang lá thư
+        hbLater(() => hbScene.classList.add("ready"), 4200);
+
+        // 5. Pháo hoa bắn nhẹ liên tục cho đến khi rời trang
+        hbLater(() => {
+            hbLoop = setInterval(() => {
+                if (document.hidden) return;
+                const { W, H } = size();
+                FX.rocket(
+                    W * hbRand(0.12, 0.88),
+                    H * hbRand(0.12, 0.38),
+                    HB_COLORS[Math.floor(Math.random() * HB_COLORS.length)],
+                    Math.random() < 0.18 ? "heart" : "ring"
+                );
+            }, 1100);
+        }, 4000);
+    }
+
+    if (hbScene) {
+        // Chạm vào màn hình: bắn pháo tới đúng chỗ chạm
+        hbScene.addEventListener("click", (event) => {
+            if (event.target.closest("button")) return;
+            const color = HB_COLORS[Math.floor(Math.random() * HB_COLORS.length)];
+            FX.rocket(event.clientX, event.clientY, color, Math.random() < 0.3 ? "heart" : "ring");
+        });
+    }
+
+    if (hbBtn) {
+        hbBtn.addEventListener("click", (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+
+            stopCelebration();
+            startMusic();
+
+            hbScene.classList.remove("show");
+
+            setTimeout(() => {
+                hbScene.classList.remove("reveal", "ready");
+                showLetterScene();
+            }, 500);
+        });
+    }
+
     function updateCountdown() {
         const remaining = BIRTHDAY_TIME - Date.now();
 
         if (remaining <= 0) {
-            showLetterScene();
+            showCelebration();
             return;
         }
 
@@ -377,7 +612,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!birthdayCountdown || !letterScene) return;
 
         if (Date.now() >= BIRTHDAY_TIME) {
-            showLetterScene();
+            showCelebration();
             return;
         }
 
@@ -581,8 +816,10 @@ Chúc em sinh nhật vui vẻ ❤️`;
                 envelope.classList.add("open");
             }
 
-            burst(18, "calc(50% + 24px)"); { const c = centerOf(seal);
-                FX.confetti(c.x, c.y, 34, { power: 7, spread: 5.4, angle: -1.57 }); }
+            burst(18, "calc(50% + 24px)"); {
+                const c = centerOf(seal);
+                FX.confetti(c.x, c.y, 34, { power: 7, spread: 5.4, angle: -1.57 });
+            }
             startMusic();
 
             // 2. Thư trượt ra khỏi phong bì
@@ -752,9 +989,11 @@ Chúc em sinh nhật vui vẻ ❤️`;
     function resetCake() {
         wishDone = false;
         wishValue = "";
-        if (wishText) { wishText.value = "";
+        if (wishText) {
+            wishText.value = "";
             wishCount.textContent = "0/160";
-            wishSend.disabled = true; }
+            wishSend.disabled = true;
+        }
         if (wishOverlay) hideWish();
         if (cakeHint) cakeHint.style.opacity = "0";
         cakeBlown = false;
@@ -1196,8 +1435,10 @@ Chúc em sinh nhật vui vẻ ❤️`;
 
             if (!ticketShuffleReady) return;
 
-            selectedNumber = ticket.dataset.ticket || "1"; { const c = centerOf(ticket);
-                FX.confetti(c.x, c.y, 26, { power: 6, spread: 6.28 }); }
+            selectedNumber = ticket.dataset.ticket || "1"; {
+                const c = centerOf(ticket);
+                FX.confetti(c.x, c.y, 26, { power: 6, spread: 6.28 });
+            }
 
             if (selectedTicketNumber) {
                 selectedTicketNumber.textContent =
@@ -1432,8 +1673,10 @@ Chúc em sinh nhật vui vẻ ❤️`;
         if (revealed) return;
 
         revealed = true;
-        FX.show(1500, 5); { const c = centerOf(scratchCanvas);
-            FX.confetti(c.x, c.y, 70, { power: 10, spread: 5, angle: -1.57 }); }
+        FX.show(1500, 5); {
+            const c = centerOf(scratchCanvas);
+            FX.confetti(c.x, c.y, 70, { power: 10, spread: 5, angle: -1.57 });
+        }
 
         if (moneyPrize) {
             moneyPrize.textContent = ACTUAL_PRIZE;

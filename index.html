@@ -5,134 +5,134 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="theme-color" content="#14040c">
-    <title>Happy Birthday ❤️</title>`
-    <link rel="icon" type="image/png" href="/Photo/ny16.png?v=6">git add index.html
-    <link rel=" preconnect " href="https://fonts.googleapis.com ">
-    <link rel="preconnect " href="https://fonts.gstatic.com " crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&family=Caveat:wght@500;600&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap " rel="stylesheet ">
-    <link rel="stylesheet " href="style.css ">
+    <title>Happy Birthday ❤️</title>
+    <link rel="icon" type="image/png" href="./Photo/ny16.png?v=100">
+    <link rel="apple-touch-icon" href="./Photo/ny16.png?v=100">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&family=Dancing+Script:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
-
 
 <body>
 
     <!-- NHẠC NỀN -->
-    <audio id="bgMusic " loop preload="auto ">
-        <source src="./music/birthday.mp3 " type="audio/mpeg ">
+    <audio id="bgMusic" loop preload="auto">
+        <source src="./music/birthday.mp3" type="audio/mpeg">
     </audio>
 
     <!-- NỀN: cực quang + ảnh trôi + bụi vàng -->
-    <div class="background " aria-hidden="true ">
-        <div class="aurora "><i></i><i></i><i></i></div>
+    <div class="background" aria-hidden="true">
+        <div class="aurora"><i></i><i></i><i></i></div>
 
-        <div class="falling-photos ">
-            <img src="./Photo/ny1.jpg " alt=" ">
-            <img src="./Photo/ny2.jpg " alt=" ">
-            <img src="./Photo/ny3.jpg " alt=" ">
-            <img src="./Photo/ny4.jpg " alt=" ">
-            <img src="./Photo/ny5.jpg " alt=" ">
-            <img src="./Photo/ny6.jpg " alt=" ">
-            <img src="./Photo/ny7.jpg " alt=" ">
-            <img src="./Photo/ny8.jpg " alt=" ">
-            <img src="./Photo/ny9.jpg " alt=" ">
-            <img src="./Photo/ny10.png " alt=" ">
-            <img src="./Photo/ny11.png " alt=" ">
-            <img src="./Photo/ny12.png " alt=" ">
-            <img src="./Photo/ny13.png " alt=" ">
+        <div class="falling-photos">
+            <img src="./Photo/ny1.jpg" alt="">
+            <img src="./Photo/ny2.jpg" alt="">
+            <img src="./Photo/ny3.jpg" alt="">
+            <img src="./Photo/ny4.jpg" alt="">
+            <img src="./Photo/ny5.jpg" alt="">
+            <img src="./Photo/ny6.jpg" alt="">
+            <img src="./Photo/ny7.jpg" alt="">
+            <img src="./Photo/ny8.jpg" alt="">
+            <img src="./Photo/ny9.jpg" alt="">
+            <img src="./Photo/ny10.png" alt="">
+            <img src="./Photo/ny11.png" alt="">
+            <img src="./Photo/ny12.png" alt="">
+            <img src="./Photo/ny13.png" alt="">
         </div>
 
-        <canvas id="fxAmbient "></canvas>
-        <div class="vignette "></div>
-        <div class="grain "></div>
+        <canvas id="fxAmbient"></canvas>
+        <div class="vignette"></div>
+        <div class="grain"></div>
     </div>
 
     <!-- Lớp pháo hoa / confetti -->
-    <canvas id="fxBurst " aria-hidden="true "></canvas>
+    <canvas id="fxBurst" aria-hidden="true"></canvas>
 
     <!-- MÀN HÌNH ĐẾM NGƯỢC -->
-    <section class="birthday-countdown " id="birthdayCountdown " aria-live="polite ">
+    <section class="birthday-countdown" id="birthdayCountdown" aria-live="polite">
 
-        <div class="countdown-orbit orbit-one "></div>
-        <div class="countdown-orbit orbit-two "></div>
+        <div class="countdown-orbit orbit-one"></div>
+        <div class="countdown-orbit orbit-two"></div>
 
-        <div class="countdown-content ">
+        <div class="countdown-content">
 
-            <div class="countdown-eyebrow ">
+            <div class="countdown-eyebrow">
                 <span></span> MỘT KHOẢNH KHẮC ĐẶC BIỆT
                 <span></span>
             </div>
 
-            <h1 class="countdown-title ">
+            <h1 class="countdown-title">
                 12/01/2006-12/01/2027
             </h1>
 
-            <p class="countdown-intro ">
+            <p class="countdown-intro">
                 Có một điều thật xinh đẹp đang chờ được bắt đầu.
             </p>
 
-            <div class="countdown-panel ">
+            <div class="countdown-panel">
 
-                <div class="countdown-topline "></div>
+                <div class="countdown-topline"></div>
 
-                <div class="countdown-numbers ">
+                <div class="countdown-numbers">
 
-                    <div class="countdown-unit ">
-                        <span id="countDays ">000</span>
+                    <div class="countdown-unit">
+                        <span id="countDays">000</span>
                         <small>NGÀY</small>
                     </div>
 
                     <b>:</b>
 
-                    <div class="countdown-unit ">
-                        <span id="countHours ">00</span>
+                    <div class="countdown-unit">
+                        <span id="countHours">00</span>
                         <small>GIỜ</small>
                     </div>
 
                     <b>:</b>
 
-                    <div class="countdown-unit ">
-                        <span id="countMinutes ">00</span>
+                    <div class="countdown-unit">
+                        <span id="countMinutes">00</span>
                         <small>PHÚT</small>
                     </div>
 
                     <b>:</b>
 
-                    <div class="countdown-unit ">
-                        <span id="countSeconds ">00</span>
+                    <div class="countdown-unit">
+                        <span id="countSeconds">00</span>
                         <small>GIÂY</small>
                     </div>
 
                 </div>
 
-                <div class="countdown-divider ">
+                <div class="countdown-divider">
                     <span></span>
                 </div>
 
-                <p class="countdown-caption ">
+                <p class="countdown-caption">
                     CHO ĐẾN KHI NGÀY CỦA EM BẮT ĐẦU
                 </p>
 
             </div>
 
-            <div class="countdown-memories " aria-hidden="true ">
+            <div class="countdown-memories" aria-hidden="true">
 
-                <figure class="countdown-photo photo-a ">
-                    <img src="./Photo/ny14.jpg " alt=" ">
+                <figure class="countdown-photo photo-a">
+                    <img src="./Photo/ny14.jpg" alt="">
                 </figure>
 
-                <div class="countdown-quote ">
+                <div class="countdown-quote">
                     <span>♥</span>
                     <p>Every moment<br>has its own magic</p>
                     <i>✧</i>
                 </div>
 
-                <figure class="countdown-photo photo-b ">
-                    <img src="./Photo/ny15.jpg " alt=" ">
+                <figure class="countdown-photo photo-b">
+                    <img src="./Photo/ny15.jpg" alt="">
                 </figure>
 
             </div>
 
-            <p class="countdown-footer ">
+            <p class="countdown-footer">
                 Một điều bất ngờ đang chờ em <span>♡</span>
             </p>
 
@@ -140,30 +140,58 @@
 
     </section>
 
+    <!-- MÀN HÌNH HAPPY BIRTHDAY + PHÁO HOA -->
+    <section class="hb-scene" id="hbScene" aria-live="polite">
+
+        <div class="hb-glow" aria-hidden="true"></div>
+
+        <div class="hb-content">
+
+            <div class="hb-eyebrow">
+                <span></span> 12 · 01 · 2027 <span></span>
+            </div>
+
+            <h1 class="hb-title" aria-label="Happy Birthday WthuLree">
+                <span class="hb-line" data-split aria-hidden="true">Happy</span>
+                <span class="hb-line" data-split aria-hidden="true">Birthday</span>
+                <!-- TÊN NGƯỜI NHẬN: sửa chữ bên dưới (và aria-label ở trên) -->
+                <span class="hb-line hb-name" data-split aria-hidden="true">WthuLree</span>
+            </h1>
+
+            <button class="premium-button hb-btn" id="hbBtn" type="button">
+                MỞ THƯ CỦA ANH
+            </button>
+
+            <p class="hb-tap">Chạm vào màn hình để bắn thêm pháo hoa ✨</p>
+
+        </div>
+
+    </section>
+
     <!-- PHONG BÌ VÀ LÁ THƯ -->
-    <section class="letter-scene " id="letterScene " style="display: none; ">
+    <section class="letter-scene" id="letterScene" style="display: none;">
 
-        <div class="envelope-wrapper ">
+        <div class="envelope-wrapper">
 
-            <div class="envelope " id="envelope ">
+            <div class="envelope" id="envelope">
 
-                <div class="envelope-back "></div>
+                <div class="envelope-back"></div>
 
-                <div class="letter ">
+                <div class="letter">
 
-                    <div class="letter-inner ">
+                    <div class="letter-inner">
 
-                        <div class="letter-label ">
+                        <div class="letter-label">
                             FOR YOU
                         </div>
 
                         <h1>Gửi em ❤️</h1>
 
-                        <div class="letter-rule "><i>✦</i></div>
+                        <div class="letter-rule"><i>✦</i></div>
 
-                        <p class="letter-message " id="message "></p>
+                        <p class="letter-message" id="message"></p>
 
-                        <button class="continue-btn " id="continueBtn " type="button ">
+                        <button class="continue-btn" id="continueBtn" type="button">
                             TIẾP TỤC
                         </button>
 
@@ -171,199 +199,184 @@
 
                 </div>
 
-                <div class="flap "></div>
-                <div class="envelope-front "></div>
+                <div class="flap"></div>
+                <div class="envelope-front"></div>
 
-                <button class="seal " id="seal " type="button " aria-label="Mở phong bì ">
+                <button class="seal" id="seal" type="button" aria-label="Mở phong bì">
                     <span>❤</span>
                 </button>
 
             </div>
 
-            <p class="envelope-hint ">Chạm vào con dấu để mở thư</p>
+            <p class="envelope-hint">Chạm vào con dấu để mở thư</p>
 
         </div>
 
     </section>
 
     <!-- BÁNH SINH NHẬT -->
-    <section class="cake-screen " id="cakeScreen ">
+    <section class="cake-screen" id="cakeScreen">
 
-        <div class="cake-small ">
+        <div class="cake-small">
             HAPPY BIRTHDAY
         </div>
 
-        <div class="cake-heading ">
+        <div class="cake-heading">
             <h1>Một điều ước cho tuổi mới...</h1>
-            <p id="cakeSub ">Hãy nhắm mắt và ước một điều nhé ❤️</p>
+            <p id="cakeSub">Hãy nhắm mắt và ước một điều nhé ❤️</p>
         </div>
 
-        <div class="cake-stage " id="cakeStage ">
+        <div class="cake-stage" id="cakeStage">
 
-            <div class="cake ">
-                <svg class="cake-svg " viewBox="0 0 400 360 " role="img " aria-label="Bánh sinh nhật ba tầng với ba cây nến ">
+            <div class="cake">
+                <svg class="cake-svg" viewBox="0 0 400 360" role="img" aria-label="Bánh sinh nhật ba tầng với ba cây nến">
   <defs>
-    <linearGradient id="plate " x1="0 " y1="0 " x2="1 " y2="0 "><stop offset="0 " stop-color="#8a6a2f "/><stop offset=".3 " stop-color="#f6e3b0 "/><stop offset=".55 " stop-color="#c9a24d "/><stop offset=".85 " stop-color="#f6e3b0 "/><stop offset="1
-        " stop-color="#8a6a2f "/></linearGradient>
-    <linearGradient id="sponge " x1="0 " y1="0 " x2="1 " y2="0 "><stop offset="0 " stop-color="#c2527a "/><stop offset=".25 " stop-color="#ee7fa2 "/><stop offset=".6 " stop-color="#f7a1ba "/><stop offset="1 " stop-color="#b94a72 "/></linearGradient>
-    <linearGradient id="sponge2 " x1="0 " y1="0 " x2="1 " y2="0 "><stop offset="0 " stop-color="#e8e0d4 "/><stop offset=".3 " stop-color="#fffaf0 "/><stop offset=".7 " stop-color="#fff3df "/><stop offset="1 " stop-color="#d8cdbd "/></linearGradient>
-    <linearGradient id="sponge3 " x1="0 " y1="0 " x2="1 " y2="0 "><stop offset="0 " stop-color="#a8406a "/><stop offset=".3 " stop-color="#e46f96 "/><stop offset=".65 " stop-color="#f490ae "/><stop offset="1 " stop-color="#9c3a62 "/></linearGradient>
-    <linearGradient id="cream " x1="0 " y1="0 " x2="0 " y2="1 "><stop offset="0 " stop-color="#fffdf7 "/><stop offset="1 " stop-color="#f6e4d0 "/></linearGradient>
-    <linearGradient id="gold " x1="0 " y1="0 " x2="1 " y2="0 "><stop offset="0 " stop-color="#9a7430 "/><stop offset=".35 " stop-color="#f9e7ae "/><stop offset=".6 " stop-color="#d1a850 "/><stop offset="1 " stop-color="#8f6a28 "/></linearGradient>
-    <radialGradient id="pearl " cx=".35 " cy=".3 " r=".8 "><stop offset="0 " stop-color="#fff "/><stop offset=".6 " stop-color="#f3e6d5 "/><stop offset="1 " stop-color="#c9b59c "/></radialGradient>
-    <linearGradient id="candleStripe " x1="0 " y1="0 " x2="1 " y2="0 "><stop offset="0 " stop-color="#e8e1d6 "/><stop offset=".5 " stop-color="#fff "/><stop offset="1 " stop-color="#d7cdbd "/></linearGradient>
-    <linearGradient id="flameG " x1="0 " y1="1 " x2="0 " y2="0 "><stop offset="0 " stop-color="#ff7a1a "/><stop offset=".55 " stop-color="#ffb62e "/><stop offset="1 " stop-color="#fff0a8 "/></linearGradient>
-    <radialGradient id="halo "><stop offset="0 " stop-color="#ffd27a " stop-opacity=".75 "/><stop offset="1 " stop-color="#ffd27a " stop-opacity="0 "/></radialGradient>
-    <radialGradient id="sheen " cx=".3 " cy=".2 " r=".9 "><stop offset="0 " stop-color="#fff " stop-opacity=".35 "/><stop offset="1 " stop-color="#fff " stop-opacity="0 "/></radialGradient>
+    <linearGradient id="plate" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#8a6a2f"/><stop offset=".3" stop-color="#f6e3b0"/><stop offset=".55" stop-color="#c9a24d"/><stop offset=".85" stop-color="#f6e3b0"/><stop offset="1" stop-color="#8a6a2f"/></linearGradient>
+    <linearGradient id="sponge" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#c2527a"/><stop offset=".25" stop-color="#ee7fa2"/><stop offset=".6" stop-color="#f7a1ba"/><stop offset="1" stop-color="#b94a72"/></linearGradient>
+    <linearGradient id="sponge2" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#e8e0d4"/><stop offset=".3" stop-color="#fffaf0"/><stop offset=".7" stop-color="#fff3df"/><stop offset="1" stop-color="#d8cdbd"/></linearGradient>
+    <linearGradient id="sponge3" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#a8406a"/><stop offset=".3" stop-color="#e46f96"/><stop offset=".65" stop-color="#f490ae"/><stop offset="1" stop-color="#9c3a62"/></linearGradient>
+    <linearGradient id="cream" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fffdf7"/><stop offset="1" stop-color="#f6e4d0"/></linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#9a7430"/><stop offset=".35" stop-color="#f9e7ae"/><stop offset=".6" stop-color="#d1a850"/><stop offset="1" stop-color="#8f6a28"/></linearGradient>
+    <radialGradient id="pearl" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#fff"/><stop offset=".6" stop-color="#f3e6d5"/><stop offset="1" stop-color="#c9b59c"/></radialGradient>
+    <linearGradient id="candleStripe" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#e8e1d6"/><stop offset=".5" stop-color="#fff"/><stop offset="1" stop-color="#d7cdbd"/></linearGradient>
+    <linearGradient id="flameG" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#ff7a1a"/><stop offset=".55" stop-color="#ffb62e"/><stop offset="1" stop-color="#fff0a8"/></linearGradient>
+    <radialGradient id="halo"><stop offset="0" stop-color="#ffd27a" stop-opacity=".75"/><stop offset="1" stop-color="#ffd27a" stop-opacity="0"/></radialGradient>
+    <radialGradient id="sheen" cx=".3" cy=".2" r=".9"><stop offset="0" stop-color="#fff" stop-opacity=".35"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
   </defs>
 
   <!-- đĩa -->
-  <ellipse cx="200 " cy="326 " rx="186 " ry="24 " fill="rgba(0,0,0,.35) "/>
-  <ellipse cx="200 " cy="318 " rx="178 " ry="22 " fill="url(#plate) "/>
-  <ellipse cx="200 " cy="314 " rx="150 " ry="16 " fill="#2a0a16 " opacity=".25 "/>
+  <ellipse cx="200" cy="326" rx="186" ry="24" fill="rgba(0,0,0,.35)"/>
+  <ellipse cx="200" cy="318" rx="178" ry="22" fill="url(#plate)"/>
+  <ellipse cx="200" cy="314" rx="150" ry="16" fill="#2a0a16" opacity=".25"/>
 
   <!-- tầng 1 -->
-  <rect x="60 " y="232 " width="280 " height="84 " rx="10 " fill="url(#sponge) "/>
-  <rect x="60 " y="232 " width="280 " height="84 " rx="10 " fill="url(#sheen) "/>
+  <rect x="60" y="232" width="280" height="84" rx="10" fill="url(#sponge)"/>
+  <rect x="60" y="232" width="280" height="84" rx="10" fill="url(#sheen)"/>
   <path d="M60 226 L60 232 L63.4 232 C63.4 261.3 84.6 261.3 84.6 232 L91.4 232 C91.4 277.2 112.6 277.2 112.6 232 L119.4 232 C119.4 266.6 140.6 266.6 140.6 232 L147.4 232 C147.4 285.2 168.6 285.2 168.6 232 L175.4 232 C175.4 263.9 196.6 263.9 196.6 232
         L203.4 232 C203.4 261.3 224.6 261.3 224.6 232 L231.4 232 C231.4 277.2 252.6 277.2 252.6 232 L259.4 232 C259.4 266.6 280.6 266.6 280.6 232 L287.4 232 C287.4 285.2 308.6 285.2 308.6 232 L315.4 232 C315.4 263.9 336.6 263.9 336.6 232 L340 232 L340 226
-        Z " fill="url(#cream) "/>
-  <ellipse cx="200 " cy="232 " rx="140 " ry="19 " fill="url(#cream) "/>
-  <ellipse cx="200 " cy="230 " rx="128 " ry="14 " fill="#fff " opacity=".55 "/>
-  <circle cx="78.5 " cy="310 " r="5.2 " fill="url(#pearl) "/>
-<circle cx="95.5 " cy="310 " r="5.2 " fill="url(#pearl) "/>
-<circle cx="112.5 " cy="310 " r="5.2 " fill="url(#pearl) "/>
-<circle cx="129.5 " cy="310 " r="5.2 " fill="url(#pearl) "/>
-<circle cx="146.5 " cy="310 " r="5.2 " fill="url(#pearl) "/>
-<circle cx="163.5 " cy="310 " r="5.2 " fill="url(#pearl) "/>
-<circle cx="180.5 " cy="310 " r="5.2 " fill="url(#pearl) "/>
-<circle cx="197.5 " cy="310 " r="5.2 " fill="url(#pearl) "/>
-<circle cx="214.5 " cy="310 " r="5.2 " fill="url(#pearl) "/>
-<circle cx="231.5 " cy="310 " r="5.2 " fill="url(#pearl) "/>
-<circle cx="248.5 " cy="310 " r="5.2 " fill="url(#pearl) "/>
-<circle cx="265.5 " cy="310 " r="5.2 " fill="url(#pearl) "/>
-<circle cx="282.5 " cy="310 " r="5.2 " fill="url(#pearl) "/>
-<circle cx="299.5 " cy="310 " r="5.2 " fill="url(#pearl) "/>
-<circle cx="316.5 " cy="310 " r="5.2 " fill="url(#pearl) "/>
-  <rect x="60 " y="292 " width="280 " height="5 " fill="url(#gold) " opacity=".95 "/>
+        Z" fill="url(#cream)"/>
+  <ellipse cx="200" cy="232" rx="140" ry="19" fill="url(#cream)"/>
+  <ellipse cx="200" cy="230" rx="128" ry="14" fill="#fff" opacity=".55"/>
+  <circle cx="78.5" cy="310" r="5.2" fill="url(#pearl)"/>
+<circle cx="95.5" cy="310" r="5.2" fill="url(#pearl)"/>
+<circle cx="112.5" cy="310" r="5.2" fill="url(#pearl)"/>
+<circle cx="129.5" cy="310" r="5.2" fill="url(#pearl)"/>
+<circle cx="146.5" cy="310" r="5.2" fill="url(#pearl)"/>
+<circle cx="163.5" cy="310" r="5.2" fill="url(#pearl)"/>
+<circle cx="180.5" cy="310" r="5.2" fill="url(#pearl)"/>
+<circle cx="197.5" cy="310" r="5.2" fill="url(#pearl)"/>
+<circle cx="214.5" cy="310" r="5.2" fill="url(#pearl)"/>
+<circle cx="231.5" cy="310" r="5.2" fill="url(#pearl)"/>
+<circle cx="248.5" cy="310" r="5.2" fill="url(#pearl)"/>
+<circle cx="265.5" cy="310" r="5.2" fill="url(#pearl)"/>
+<circle cx="282.5" cy="310" r="5.2" fill="url(#pearl)"/>
+<circle cx="299.5" cy="310" r="5.2" fill="url(#pearl)"/>
+<circle cx="316.5" cy="310" r="5.2" fill="url(#pearl)"/>
+  <rect x="60" y="292" width="280" height="5" fill="url(#gold)" opacity=".95"/>
 
   <!-- tầng 2 -->
-  <rect x="100 " y="166 " width="200 " height="68 " rx="9 " fill="url(#sponge2) "/>
-  <rect x="100 " y="166 " width="200 " height="68 " rx="9 " fill="url(#sheen) "/>
-  <rect x="100 " y="206 " width="200 " height="8 " fill="url(#gold) "/>
+  <rect x="100" y="166" width="200" height="68" rx="9" fill="url(#sponge2)"/>
+  <rect x="100" y="166" width="200" height="68" rx="9" fill="url(#sheen)"/>
+  <rect x="100" y="206" width="200" height="8" fill="url(#gold)"/>
   <path d="M100 160 L100 166 L103.4 166 C103.4 192.6 125.1 192.6 125.1 166 L132.0 166 C132.0 205.9 153.7 205.9 153.7 166 L160.6 166 C160.6 197.9 182.3 197.9 182.3 166 L189.1 166 C189.1 211.2 210.9 211.2 210.9 166 L217.7 166 C217.7 192.6 239.4 192.6
-        239.4 166 L246.3 166 C246.3 205.9 268.0 205.9 268.0 166 L274.9 166 C274.9 197.9 296.6 197.9 296.6 166 L300 166 L300 160 Z " fill="url(#cream) " stroke="#ecd9c0 " stroke-width=".6 "/>
-  <ellipse cx="200 " cy="166 " rx="100 " ry="15 " fill="url(#cream) "/>
-  <ellipse cx="200 " cy="165 " rx="90 " ry="10 " fill="#fff " opacity=".6 "/>
-  <circle cx="115.5 " cy="226 " r="4.2 " fill="url(#pearl) "/>
-<circle cx="130.5 " cy="226 " r="4.2 " fill="url(#pearl) "/>
-<circle cx="145.5 " cy="226 " r="4.2 " fill="url(#pearl) "/>
-<circle cx="160.5 " cy="226 " r="4.2 " fill="url(#pearl) "/>
-<circle cx="175.5 " cy="226 " r="4.2 " fill="url(#pearl) "/>
-<circle cx="190.5 " cy="226 " r="4.2 " fill="url(#pearl) "/>
-<circle cx="205.5 " cy="226 " r="4.2 " fill="url(#pearl) "/>
-<circle cx="220.5 " cy="226 " r="4.2 " fill="url(#pearl) "/>
-<circle cx="235.5 " cy="226 " r="4.2 " fill="url(#pearl) "/>
-<circle cx="250.5 " cy="226 " r="4.2 " fill="url(#pearl) "/>
-<circle cx="265.5 " cy="226 " r="4.2 " fill="url(#pearl) "/>
-<circle cx="280.5 " cy="226 " r="4.2 " fill="url(#pearl) "/>
+        239.4 166 L246.3 166 C246.3 205.9 268.0 205.9 268.0 166 L274.9 166 C274.9 197.9 296.6 197.9 296.6 166 L300 166 L300 160 Z" fill="url(#cream)" stroke="#ecd9c0" stroke-width=".6"/>
+  <ellipse cx="200" cy="166" rx="100" ry="15" fill="url(#cream)"/>
+  <ellipse cx="200" cy="165" rx="90" ry="10" fill="#fff" opacity=".6"/>
+  <circle cx="115.5" cy="226" r="4.2" fill="url(#pearl)"/>
+<circle cx="130.5" cy="226" r="4.2" fill="url(#pearl)"/>
+<circle cx="145.5" cy="226" r="4.2" fill="url(#pearl)"/>
+<circle cx="160.5" cy="226" r="4.2" fill="url(#pearl)"/>
+<circle cx="175.5" cy="226" r="4.2" fill="url(#pearl)"/>
+<circle cx="190.5" cy="226" r="4.2" fill="url(#pearl)"/>
+<circle cx="205.5" cy="226" r="4.2" fill="url(#pearl)"/>
+<circle cx="220.5" cy="226" r="4.2" fill="url(#pearl)"/>
+<circle cx="235.5" cy="226" r="4.2" fill="url(#pearl)"/>
+<circle cx="250.5" cy="226" r="4.2" fill="url(#pearl)"/>
+<circle cx="265.5" cy="226" r="4.2" fill="url(#pearl)"/>
+<circle cx="280.5" cy="226" r="4.2" fill="url(#pearl)"/>
 
   <!-- tầng 3 -->
-  <rect x="140 " y="112 " width="120 " height="56 " rx="8 " fill="url(#sponge3) "/>
-  <rect x="140 " y="112 " width="120 " height="56 " rx="8 " fill="url(#sheen) "/>
+  <rect x="140" y="112" width="120" height="56" rx="8" fill="url(#sponge3)"/>
+  <rect x="140" y="112" width="120" height="56" rx="8" fill="url(#sheen)"/>
   <path d="M140 106 L140 112 L142.9 112 C142.9 135.9 161.1 135.9 161.1 112 L166.9 112 C166.9 146.6 185.1 146.6 185.1 112 L190.9 112 C190.9 138.6 209.1 138.6 209.1 112 L214.9 112 C214.9 149.2 233.1 149.2 233.1 112 L238.9 112 C238.9 133.3 257.1 133.3
-        257.1 112 L260 112 L260 106 Z " fill="url(#cream) "/>
-  <ellipse cx="200 " cy="112 " rx="60 " ry="10 " fill="url(#cream) "/>
-  <circle cx="152.5 " cy="164 " r="3.6 " fill="url(#pearl) "/>
-<circle cx="165.5 " cy="164 " r="3.6 " fill="url(#pearl) "/>
-<circle cx="178.5 " cy="164 " r="3.6 " fill="url(#pearl) "/>
-<circle cx="191.5 " cy="164 " r="3.6 " fill="url(#pearl) "/>
-<circle cx="204.5 " cy="164 " r="3.6 " fill="url(#pearl) "/>
-<circle cx="217.5 " cy="164 " r="3.6 " fill="url(#pearl) "/>
-<circle cx="230.5 " cy="164 " r="3.6 " fill="url(#pearl) "/>
-<circle cx="243.5 " cy="164 " r="3.6 " fill="url(#pearl) "/>
-  <g class="heart-topper " transform="translate(200 160) "></g>
+        257.1 112 L260 112 L260 106 Z" fill="url(#cream)"/>
+  <ellipse cx="200" cy="112" rx="60" ry="10" fill="url(#cream)"/>
+  <circle cx="152.5" cy="164" r="3.6" fill="url(#pearl)"/>
+<circle cx="165.5" cy="164" r="3.6" fill="url(#pearl)"/>
+<circle cx="178.5" cy="164" r="3.6" fill="url(#pearl)"/>
+<circle cx="191.5" cy="164" r="3.6" fill="url(#pearl)"/>
+<circle cx="204.5" cy="164" r="3.6" fill="url(#pearl)"/>
+<circle cx="217.5" cy="164" r="3.6" fill="url(#pearl)"/>
+<circle cx="230.5" cy="164" r="3.6" fill="url(#pearl)"/>
+<circle cx="243.5" cy="164" r="3.6" fill="url(#pearl)"/>
+  <g class="heart-topper" transform="translate(200 160)"></g>
 
   <!-- cắt hoa nhỏ + cốm -->
-  <rect x="157.0 " y="257.5 " width="7 " height="2.4 " rx="1.2 " fill="#ffd9a0 " transform="rotate(166 157.0 257.5) " opacity=".9 "/><rect x="95.7 " y="276.8 " width="7 " height="2.4 " rx="1.2 " fill="#ffd9a0 " transform="rotate(93 95.7 276.8)
-        " opacity=".9 "/><rect x="300.0 " y="260.7 " width="7 " height="2.4 " rx="1.2 " fill="#f2c46d " transform="rotate(22 300.0 260.7) " opacity=".9 "/><rect x="180.0 " y="262.0 " width="7 " height="2.4 " rx="1.2 " fill="#f2c46d " transform="rotate(141 180.0 262.0)
-        " opacity=".9 "/><rect x="92.4 " y="278.3 " width="7 " height="2.4 " rx="1.2 " fill="#ffd9a0 " transform="rotate(57 92.4 278.3) " opacity=".9 "/><rect x="218.8 " y="269.8 " width="7 " height="2.4 " rx="1.2 " fill="#ffd9a0 " transform="rotate(56 218.8 269.8)
-        " opacity=".9 "/><rect x="213.8 " y="256.7 " width="7 " height="2.4 " rx="1.2 " fill="#ffffff " transform="rotate(107 213.8 256.7) " opacity=".9 "/><rect x="209.9 " y="278.5 " width="7 " height="2.4 " rx="1.2 " fill="#ffffff " transform="rotate(143 209.9 278.5)
-        " opacity=".9 "/><rect x="103.1 " y="278.6 " width="7 " height="2.4 " rx="1.2 " fill="#ff9db5 " transform="rotate(48 103.1 278.6) " opacity=".9 "/><rect x="101.8 " y="285.6 " width="7 " height="2.4 " rx="1.2 " fill="#ffd9a0 " transform="rotate(144 101.8 285.6)
-        " opacity=".9 "/><rect x="229.0 " y="274.8 " width="7 " height="2.4 " rx="1.2 " fill="#f2c46d " transform="rotate(136 229.0 274.8) " opacity=".9 "/><rect x="267.6 " y="273.3 " width="7 " height="2.4 " rx="1.2 " fill="#ff9db5 " transform="rotate(116 267.6 273.3)
-        " opacity=".9 "/><rect x="151.1 " y="289.7 " width="7 " height="2.4 " rx="1.2 " fill="#ffffff " transform="rotate(178 151.1 289.7) " opacity=".9 "/><rect x="98.0 " y="265.0 " width="7 " height="2.4 " rx="1.2 " fill="#ff9db5 " transform="rotate(126 98.0 265.0)
-        " opacity=".9 "/><rect x="238.5 " y="191.5 " width="7 " height="2.4 " rx="1.2 " fill="#ffd9a0 " transform="rotate(18 238.5 191.5) " opacity=".9 "/><rect x="202.0 " y="187.4 " width="7 " height="2.4 " rx="1.2 " fill="#ffffff " transform="rotate(87 202.0 187.4)
-        " opacity=".9 "/><rect x="272.8 " y="195.9 " width="7 " height="2.4 " rx="1.2 " fill="#ffd9a0 " transform="rotate(171 272.8 195.9) " opacity=".9 "/><rect x="244.4 " y="200.9 " width="7 " height="2.4 " rx="1.2 " fill="#ff9db5 " transform="rotate(80 244.4 200.9)
-        " opacity=".9 "/><rect x="232.8 " y="201.6 " width="7 " height="2.4 " rx="1.2 " fill="#f2c46d " transform="rotate(148 232.8 201.6) " opacity=".9 "/><rect x="127.6 " y="185.1 " width="7 " height="2.4 " rx="1.2 " fill="#f2c46d " transform="rotate(69 127.6 185.1)
-        " opacity=".9 "/><rect x="233.1 " y="184.1 " width="7 " height="2.4 " rx="1.2 " fill="#ff9db5 " transform="rotate(179 233.1 184.1) " opacity=".9 "/><rect x="224.7 " y="214.8 " width="7 " height="2.4 " rx="1.2 " fill="#ff9db5 " transform="rotate(114 224.7 214.8)
-        " opacity=".9 "/><rect x="236.4 " y="211.3 " width="7 " height="2.4 " rx="1.2 " fill="#ffd9a0 " transform="rotate(88 236.4 211.3) " opacity=".9 "/><rect x="244.1 " y="132.7 " width="7 " height="2.4 " rx="1.2 " fill="#ffd9a0 " transform="rotate(156 244.1 132.7)
-        " opacity=".9 "/><rect x="199.4 " y="128.5 " width="7 " height="2.4 " rx="1.2 " fill="#ffffff " transform="rotate(73 199.4 128.5) " opacity=".9 "/><rect x="223.8 " y="133.9 " width="7 " height="2.4 " rx="1.2 " fill="#ffd9a0 " transform="rotate(127 223.8 133.9)
-        " opacity=".9 "/><rect x="166.6 " y="134.0 " width="7 " height="2.4 " rx="1.2 " fill="#ffffff " transform="rotate(71 166.6 134.0) " opacity=".9 "/><rect x="231.9 " y="147.9 " width="7 " height="2.4 " rx="1.2 " fill="#f2c46d " transform="rotate(71 231.9 147.9)
-        " opacity=".9 "/><rect x="248.6 " y="142.5 " width="7 " height="2.4 " rx="1.2 " fill="#ffffff " transform="rotate(97 248.6 142.5) " opacity=".9 "/>
+  <rect x="157.0" y="257.5" width="7" height="2.4" rx="1.2" fill="#ffd9a0" transform="rotate(166 157.0 257.5)" opacity=".9"/><rect x="95.7" y="276.8" width="7" height="2.4" rx="1.2" fill="#ffd9a0" transform="rotate(93 95.7 276.8)" opacity=".9"/><rect x="300.0" y="260.7" width="7" height="2.4" rx="1.2" fill="#f2c46d" transform="rotate(22 300.0 260.7)" opacity=".9"/><rect x="180.0" y="262.0" width="7" height="2.4" rx="1.2" fill="#f2c46d" transform="rotate(141 180.0 262.0)" opacity=".9"/><rect x="92.4" y="278.3" width="7" height="2.4" rx="1.2" fill="#ffd9a0" transform="rotate(57 92.4 278.3)" opacity=".9"/><rect x="218.8" y="269.8" width="7" height="2.4" rx="1.2" fill="#ffd9a0" transform="rotate(56 218.8 269.8)" opacity=".9"/><rect x="213.8" y="256.7" width="7" height="2.4" rx="1.2" fill="#ffffff" transform="rotate(107 213.8 256.7)" opacity=".9"/><rect x="209.9" y="278.5" width="7" height="2.4" rx="1.2" fill="#ffffff" transform="rotate(143 209.9 278.5)" opacity=".9"/><rect x="103.1" y="278.6" width="7" height="2.4" rx="1.2" fill="#ff9db5" transform="rotate(48 103.1 278.6)" opacity=".9"/><rect x="101.8" y="285.6" width="7" height="2.4" rx="1.2" fill="#ffd9a0" transform="rotate(144 101.8 285.6)" opacity=".9"/><rect x="229.0" y="274.8" width="7" height="2.4" rx="1.2" fill="#f2c46d" transform="rotate(136 229.0 274.8)" opacity=".9"/><rect x="267.6" y="273.3" width="7" height="2.4" rx="1.2" fill="#ff9db5" transform="rotate(116 267.6 273.3)" opacity=".9"/><rect x="151.1" y="289.7" width="7" height="2.4" rx="1.2" fill="#ffffff" transform="rotate(178 151.1 289.7)" opacity=".9"/><rect x="98.0" y="265.0" width="7" height="2.4" rx="1.2" fill="#ff9db5" transform="rotate(126 98.0 265.0)" opacity=".9"/><rect x="238.5" y="191.5" width="7" height="2.4" rx="1.2" fill="#ffd9a0" transform="rotate(18 238.5 191.5)" opacity=".9"/><rect x="202.0" y="187.4" width="7" height="2.4" rx="1.2" fill="#ffffff" transform="rotate(87 202.0 187.4)" opacity=".9"/><rect x="272.8" y="195.9" width="7" height="2.4" rx="1.2" fill="#ffd9a0" transform="rotate(171 272.8 195.9)" opacity=".9"/><rect x="244.4" y="200.9" width="7" height="2.4" rx="1.2" fill="#ff9db5" transform="rotate(80 244.4 200.9)" opacity=".9"/><rect x="232.8" y="201.6" width="7" height="2.4" rx="1.2" fill="#f2c46d" transform="rotate(148 232.8 201.6)" opacity=".9"/><rect x="127.6" y="185.1" width="7" height="2.4" rx="1.2" fill="#f2c46d" transform="rotate(69 127.6 185.1)" opacity=".9"/><rect x="233.1" y="184.1" width="7" height="2.4" rx="1.2" fill="#ff9db5" transform="rotate(179 233.1 184.1)" opacity=".9"/><rect x="224.7" y="214.8" width="7" height="2.4" rx="1.2" fill="#ff9db5" transform="rotate(114 224.7 214.8)" opacity=".9"/><rect x="236.4" y="211.3" width="7" height="2.4" rx="1.2" fill="#ffd9a0" transform="rotate(88 236.4 211.3)" opacity=".9"/><rect x="244.1" y="132.7" width="7" height="2.4" rx="1.2" fill="#ffd9a0" transform="rotate(156 244.1 132.7)" opacity=".9"/><rect x="199.4" y="128.5" width="7" height="2.4" rx="1.2" fill="#ffffff" transform="rotate(73 199.4 128.5)" opacity=".9"/><rect x="223.8" y="133.9" width="7" height="2.4" rx="1.2" fill="#ffd9a0" transform="rotate(127 223.8 133.9)" opacity=".9"/><rect x="166.6" y="134.0" width="7" height="2.4" rx="1.2" fill="#ffffff" transform="rotate(71 166.6 134.0)" opacity=".9"/><rect x="231.9" y="147.9" width="7" height="2.4" rx="1.2" fill="#f2c46d" transform="rotate(71 231.9 147.9)" opacity=".9"/><rect x="248.6" y="142.5" width="7" height="2.4" rx="1.2" fill="#ffffff" transform="rotate(97 248.6 142.5)" opacity=".9"/>
 
   
-    <g class="candle-svg c1 ">
-      <rect x="167 " y="72 " width="10 " height="42 " rx="2.5 " fill="url(#candleStripe) "/>
-      <rect x="167 " y="72 " width="10 " height="5 " rx="2.5 " fill="#fff " opacity=".35 "/>
-      <rect x="171.3 " y="64 " width="1.4 " height="9 " rx=".7 " fill="#4a2a1a "/>
-      <g class="flame-svg " transform="translate(172 60) ">
-        <ellipse class="flame-halo " cx="0 " cy="-8 " rx="22 " ry="26 " fill="url(#halo) "/>
-        <path class="flame-body " d="M0 4 C-7 -2 -7 -12 0 -26 C7 -12 7 -2 0 4Z " fill="url(#flameG) "/>
-        <path class="flame-core " d="M0 3 C-3 -1 -3 -7 0 -14 C3 -7 3 -1 0 3Z " fill="#fff6d6 "/>
+    <g class="candle-svg c1">
+      <rect x="167" y="72" width="10" height="42" rx="2.5" fill="url(#candleStripe)"/>
+      <rect x="167" y="72" width="10" height="5" rx="2.5" fill="#fff" opacity=".35"/>
+      <rect x="171.3" y="64" width="1.4" height="9" rx=".7" fill="#4a2a1a"/>
+      <g class="flame-svg" transform="translate(172 60)">
+        <ellipse class="flame-halo" cx="0" cy="-8" rx="22" ry="26" fill="url(#halo)"/>
+        <path class="flame-body" d="M0 4 C-7 -2 -7 -12 0 -26 C7 -12 7 -2 0 4Z" fill="url(#flameG)"/>
+        <path class="flame-core" d="M0 3 C-3 -1 -3 -7 0 -14 C3 -7 3 -1 0 3Z" fill="#fff6d6"/>
       </g>
-      <g class="smoke " transform="translate(172 60) ">
-        <path d="M0 0 C-6 -10 6 -18 0 -30 C-4 -38 4 -44 0 -52 " fill="none " stroke="#fff " stroke-width="2 " stroke-linecap="round "/>
-      </g>
-    </g>
-    <g class="candle-svg c2 ">
-      <rect x="195 " y="72 " width="10 " height="42 " rx="2.5 " fill="url(#candleStripe) "/>
-      <rect x="195 " y="72 " width="10 " height="5 " rx="2.5 " fill="#fff " opacity=".35 "/>
-      <rect x="199.3 " y="64 " width="1.4 " height="9 " rx=".7 " fill="#4a2a1a "/>
-      <g class="flame-svg " transform="translate(200 60) ">
-        <ellipse class="flame-halo " cx="0 " cy="-8 " rx="22 " ry="26 " fill="url(#halo) "/>
-        <path class="flame-body " d="M0 4 C-7 -2 -7 -12 0 -26 C7 -12 7 -2 0 4Z " fill="url(#flameG) "/>
-        <path class="flame-core " d="M0 3 C-3 -1 -3 -7 0 -14 C3 -7 3 -1 0 3Z " fill="#fff6d6 "/>
-      </g>
-      <g class="smoke " transform="translate(200 60) ">
-        <path d="M0 0 C-6 -10 6 -18 0 -30 C-4 -38 4 -44 0 -52 " fill="none " stroke="#fff " stroke-width="2 " stroke-linecap="round "/>
+      <g class="smoke" transform="translate(172 60)">
+        <path d="M0 0 C-6 -10 6 -18 0 -30 C-4 -38 4 -44 0 -52" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
       </g>
     </g>
-    <g class="candle-svg c3 ">
-      <rect x="223 " y="72 " width="10 " height="42 " rx="2.5 " fill="url(#candleStripe) "/>
-      <rect x="223 " y="72 " width="10 " height="5 " rx="2.5 " fill="#fff " opacity=".35 "/>
-      <rect x="227.3 " y="64 " width="1.4 " height="9 " rx=".7 " fill="#4a2a1a "/>
-      <g class="flame-svg " transform="translate(228 60) ">
-        <ellipse class="flame-halo " cx="0 " cy="-8 " rx="22 " ry="26 " fill="url(#halo) "/>
-        <path class="flame-body " d="M0 4 C-7 -2 -7 -12 0 -26 C7 -12 7 -2 0 4Z " fill="url(#flameG) "/>
-        <path class="flame-core " d="M0 3 C-3 -1 -3 -7 0 -14 C3 -7 3 -1 0 3Z " fill="#fff6d6 "/>
+    <g class="candle-svg c2">
+      <rect x="195" y="72" width="10" height="42" rx="2.5" fill="url(#candleStripe)"/>
+      <rect x="195" y="72" width="10" height="5" rx="2.5" fill="#fff" opacity=".35"/>
+      <rect x="199.3" y="64" width="1.4" height="9" rx=".7" fill="#4a2a1a"/>
+      <g class="flame-svg" transform="translate(200 60)">
+        <ellipse class="flame-halo" cx="0" cy="-8" rx="22" ry="26" fill="url(#halo)"/>
+        <path class="flame-body" d="M0 4 C-7 -2 -7 -12 0 -26 C7 -12 7 -2 0 4Z" fill="url(#flameG)"/>
+        <path class="flame-core" d="M0 3 C-3 -1 -3 -7 0 -14 C3 -7 3 -1 0 3Z" fill="#fff6d6"/>
       </g>
-      <g class="smoke " transform="translate(228 60) ">
-        <path d="M0 0 C-6 -10 6 -18 0 -30 C-4 -38 4 -44 0 -52 " fill="none " stroke="#fff " stroke-width="2 " stroke-linecap="round "/>
+      <g class="smoke" transform="translate(200 60)">
+        <path d="M0 0 C-6 -10 6 -18 0 -30 C-4 -38 4 -44 0 -52" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+      </g>
+    </g>
+    <g class="candle-svg c3">
+      <rect x="223" y="72" width="10" height="42" rx="2.5" fill="url(#candleStripe)"/>
+      <rect x="223" y="72" width="10" height="5" rx="2.5" fill="#fff" opacity=".35"/>
+      <rect x="227.3" y="64" width="1.4" height="9" rx=".7" fill="#4a2a1a"/>
+      <g class="flame-svg" transform="translate(228 60)">
+        <ellipse class="flame-halo" cx="0" cy="-8" rx="22" ry="26" fill="url(#halo)"/>
+        <path class="flame-body" d="M0 4 C-7 -2 -7 -12 0 -26 C7 -12 7 -2 0 4Z" fill="url(#flameG)"/>
+        <path class="flame-core" d="M0 3 C-3 -1 -3 -7 0 -14 C3 -7 3 -1 0 3Z" fill="#fff6d6"/>
+      </g>
+      <g class="smoke" transform="translate(228 60)">
+        <path d="M0 0 C-6 -10 6 -18 0 -30 C-4 -38 4 -44 0 -52" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
       </g>
     </g>
 </svg>
             </div>
 
-            <p class="cake-hint " id="cakeHint ">Chạm vào bánh để thổi nến</p>
+            <p class="cake-hint" id="cakeHint">Chạm vào bánh để thổi nến</p>
 
         </div>
 
-        <button class="premium-button open-gift-btn " id="openGiftBtn " type="button ">
+        <button class="premium-button open-gift-btn" id="openGiftBtn" type="button">
             MỞ QUÀ
         </button>
 
 
         <!-- GHI ĐIỀU ƯỚC VÀO GIẤY -->
-        <div class="wish-overlay " id="wishOverlay " aria-hidden="true ">
-            <form class="wish-paper " id="wishForm " autocomplete="off ">
-                <span class="wish-label ">MAKE A WISH</span>
+        <div class="wish-overlay" id="wishOverlay" aria-hidden="true">
+            <form class="wish-paper" id="wishForm" autocomplete="off">
+                <span class="wish-label">MAKE A WISH</span>
                 <h2>Viết điều ước của em</h2>
-                <p class="wish-sub ">Ghi ra giấy, rồi để nó bay lên cùng ánh nến ✨</p>
-                <textarea id="wishText " maxlength="160 " rows="4 " placeholder="Em ước rằng... " aria-label="Điều ước của em "></textarea>
-                <div class="wish-meta "><span id="wishCount ">0/160</span></div>
-                <div class="wish-actions ">
-                    <button class="premium-button wish-send " id="wishSend " type="submit " disabled>GỬI ĐIỀU ƯỚC</button>
-                    <button class="wish-skip " id="wishSkip " type="button ">Để sau, em ước thầm trong lòng</button>
+                <p class="wish-sub">Ghi ra giấy, rồi để nó bay lên cùng ánh nến ✨</p>
+                <textarea id="wishText" maxlength="160" rows="4" placeholder="Em ước rằng..." aria-label="Điều ước của em"></textarea>
+                <div class="wish-meta"><span id="wishCount">0/160</span></div>
+                <div class="wish-actions">
+                    <button class="premium-button wish-send" id="wishSend" type="submit" disabled>GỬI ĐIỀU ƯỚC</button>
+                    <button class="wish-skip" id="wishSkip" type="button">Để sau, em ước thầm trong lòng</button>
                 </div>
             </form>
         </div>
@@ -371,88 +384,88 @@
     </section>
 
     <!-- MÀN HÌNH CHỌN THẺ CÀO -->
-    <section class="scratch-screen " id="scratchScreen ">
+    <section class="scratch-screen" id="scratchScreen">
 
-        <div class="ticket-selection " id="ticketSelection ">
+        <div class="ticket-selection" id="ticketSelection">
 
-            <div class="ticket-heading-small ">
+            <div class="ticket-heading-small">
                 A LITTLE SURPRISE
             </div>
 
-            <div class="ticket-heading ">
+            <div class="ticket-heading">
                 <h1>Chọn một chiếc thẻ</h1>
                 <p>Chọn chiếc vé mà em cảm thấy may mắn nhất</p>
-                <p class="ticket-note ">
+                <p class="ticket-note">
                     Mỗi chiếc thẻ đều có một món quà bí mật
                 </p>
             </div>
 
 
-            <div class="tickets ">
+            <div class="tickets">
 
-                <div class="ticket " data-ticket="1 ">
-                    <div class="ticket-inner ">
-                        <div class="ticket-number ">01</div>
-                        <div class="ticket-divider "></div>
-                        <div class="ticket-title ">PHẦN QUÀ</div>
-                        <div class="ticket-prize ">5.000.000đ</div>
-                        <div class="ticket-secret ">SCRATCH CARD</div>
-                        <div class="ticket-bottom ">CHỌN CHIẾC NÀY</div>
+                <div class="ticket" data-ticket="1">
+                    <div class="ticket-inner">
+                        <div class="ticket-number">01</div>
+                        <div class="ticket-divider"></div>
+                        <div class="ticket-title">PHẦN QUÀ</div>
+                        <div class="ticket-prize">5.000.000đ</div>
+                        <div class="ticket-secret">SCRATCH CARD</div>
+                        <div class="ticket-bottom">CHỌN CHIẾC NÀY</div>
                     </div>
                 </div>
 
-                <div class="ticket " data-ticket="2 ">
-                    <div class="ticket-inner ">
-                        <div class="ticket-number ">02</div>
-                        <div class="ticket-divider "></div>
-                        <div class="ticket-title ">PHẦN QUÀ</div>
-                        <div class="ticket-prize ">7.000.000đ</div>
-                        <div class="ticket-secret ">SCRATCH CARD</div>
-                        <div class="ticket-bottom ">CHỌN CHIẾC NÀY</div>
+                <div class="ticket" data-ticket="2">
+                    <div class="ticket-inner">
+                        <div class="ticket-number">02</div>
+                        <div class="ticket-divider"></div>
+                        <div class="ticket-title">PHẦN QUÀ</div>
+                        <div class="ticket-prize">7.000.000đ</div>
+                        <div class="ticket-secret">SCRATCH CARD</div>
+                        <div class="ticket-bottom">CHỌN CHIẾC NÀY</div>
                     </div>
                 </div>
 
-                <div class="ticket " data-ticket="3 ">
-                    <div class="ticket-inner ">
-                        <div class="ticket-number ">03</div>
-                        <div class="ticket-divider "></div>
-                        <div class="ticket-title ">PHẦN QUÀ</div>
-                        <div class="ticket-prize ">9.000.000đ</div>
-                        <div class="ticket-secret ">SCRATCH CARD</div>
-                        <div class="ticket-bottom ">CHỌN CHIẾC NÀY</div>
+                <div class="ticket" data-ticket="3">
+                    <div class="ticket-inner">
+                        <div class="ticket-number">03</div>
+                        <div class="ticket-divider"></div>
+                        <div class="ticket-title">PHẦN QUÀ</div>
+                        <div class="ticket-prize">9.000.000đ</div>
+                        <div class="ticket-secret">SCRATCH CARD</div>
+                        <div class="ticket-bottom">CHỌN CHIẾC NÀY</div>
                     </div>
                 </div>
 
-                <div class="ticket " data-ticket="4 ">
-                    <div class="ticket-inner ">
-                        <div class="ticket-number ">04</div>
-                        <div class="ticket-divider "></div>
-                        <div class="ticket-title ">PHẦN QUÀ</div>
-                        <div class="ticket-prize ">11.000.000đ</div>
-                        <div class="ticket-secret ">SCRATCH CARD</div>
-                        <div class="ticket-bottom ">CHỌN CHIẾC NÀY</div>
+                <div class="ticket" data-ticket="4">
+                    <div class="ticket-inner">
+                        <div class="ticket-number">04</div>
+                        <div class="ticket-divider"></div>
+                        <div class="ticket-title">PHẦN QUÀ</div>
+                        <div class="ticket-prize">11.000.000đ</div>
+                        <div class="ticket-secret">SCRATCH CARD</div>
+                        <div class="ticket-bottom">CHỌN CHIẾC NÀY</div>
                     </div>
                 </div>
 
-                <div class="ticket " data-ticket="5 ">
-                    <div class="ticket-inner ">
-                        <div class="ticket-number ">05</div>
-                        <div class="ticket-divider "></div>
-                        <div class="ticket-title ">PHẦN QUÀ</div>
-                        <div class="ticket-prize ">13.000.000đ</div>
-                        <div class="ticket-secret ">SCRATCH CARD</div>
-                        <div class="ticket-bottom ">CHỌN CHIẾC NÀY</div>
+                <div class="ticket" data-ticket="5">
+                    <div class="ticket-inner">
+                        <div class="ticket-number">05</div>
+                        <div class="ticket-divider"></div>
+                        <div class="ticket-title">PHẦN QUÀ</div>
+                        <div class="ticket-prize">13.000.000đ</div>
+                        <div class="ticket-secret">SCRATCH CARD</div>
+                        <div class="ticket-bottom">CHỌN CHIẾC NÀY</div>
                     </div>
                 </div>
 
-                <div class="ticket " data-ticket="6 ">
-                    <div class="ticket-inner ">
-                        <div class="ticket-number ">06</div>
-                        <div class="ticket-divider "></div>
-                        <div class="ticket-title ">PHẦN QUÀ</div>
-                        <div class="ticket-prize ">15.000.000đ</div>
-                        <div class="ticket-secret ">SCRATCH CARD</div>
-                        <div class="ticket-bottom ">CHỌN CHIẾC NÀY</div>
+                <div class="ticket" data-ticket="6">
+                    <div class="ticket-inner">
+                        <div class="ticket-number">06</div>
+                        <div class="ticket-divider"></div>
+                        <div class="ticket-title">PHẦN QUÀ</div>
+                        <div class="ticket-prize">15.000.000đ</div>
+                        <div class="ticket-secret">SCRATCH CARD</div>
+                        <div class="ticket-bottom">CHỌN CHIẾC NÀY</div>
                     </div>
                 </div>
 
@@ -460,46 +473,46 @@
 
 
             <!-- THẺ CÀO LỚN -->
-            <div class="selected-ticket " id="selectedTicket ">
+            <div class="selected-ticket" id="selectedTicket">
 
-                <div class="scratch-card ">
+                <div class="scratch-card">
 
-                    <div class="scratch-card-top ">
+                    <div class="scratch-card-top">
 
                         <div>
                             <span>HAPPY BIRTHDAY</span>
                             <strong>SCRATCH CARD</strong>
                         </div>
 
-                        <b>#<span id="selectedTicketNumber ">01</span></b>
+                        <b>#<span id="selectedTicketNumber">01</span></b>
 
                     </div>
 
-                    <div class="scratch-card-heading ">
+                    <div class="scratch-card-heading">
                         <small>A SPECIAL GIFT FOR YOU</small>
                         <h2>Cào lớp bạc để mở quà</h2>
                         <p>Chúc em thật nhiều niềm vui ❤️</p>
                     </div>
 
-                    <div class="scratch-area ">
+                    <div class="scratch-area">
 
-                        <div class="hidden-reward ">
+                        <div class="hidden-reward">
 
-                            <div class="reward-small ">CHÚC MỪNG</div>
+                            <div class="reward-small">CHÚC MỪNG</div>
 
-                            <strong id="moneyPrize ">15.000.000 VNĐ</strong>
+                            <strong id="moneyPrize">15.000.000 VNĐ</strong>
 
-                            <div class="reward-note ">
+                            <div class="reward-note">
                                 Món quà đặc biệt dành cho em
                             </div>
 
                         </div>
 
-                        <canvas id="scratchCanvas "></canvas>
+                        <canvas id="scratchCanvas"></canvas>
 
                     </div>
 
-                    <div class="scratch-progress " id="scratchProgress ">
+                    <div class="scratch-progress" id="scratchProgress">
                         Cào lớp bạc để mở phần quà
                     </div>
 
@@ -512,26 +525,26 @@
     </section>
 
     <!-- MÀN HÌNH CHÚC MỪNG -->
-    <section class="claim-success " id="claimSuccess ">
+    <section class="claim-success" id="claimSuccess">
 
-        <div class="success-card ">
+        <div class="success-card">
 
-            <div class="success-small ">CONGRATULATIONS</div>
-            <div class="success-line "></div>
+            <div class="success-small">CONGRATULATIONS</div>
+            <div class="success-line"></div>
 
             <h1>CHÚC MỪNG EM ❤️</h1>
 
             <p>Phần quà em đã chọn là</p>
 
-            <div class="success-money " id="successMoney ">
+            <div class="success-money" id="successMoney">
                 15.000.000 VNĐ
             </div>
 
-            <p class="success-note ">
+            <p class="success-note">
                 Một món quà nhỏ dành riêng cho em.
             </p>
 
-            <button class="premium-button " id="finalClaimBtn " type="button ">
+            <button class="premium-button" id="finalClaimBtn" type="button">
                 NHẬN QUÀ
             </button>
 
@@ -540,11 +553,11 @@
     </section>
 
     <!-- NÚT BẬT / TẮT NHẠC -->
-    <button id="musicBtn " class="music-toggle " type="button " aria-label="Tắt hoặc bật nhạc " title="Tắt / bật nhạc ">
+    <button id="musicBtn" class="music-toggle" type="button" aria-label="Tắt hoặc bật nhạc" title="Tắt / bật nhạc">
         🔊
     </button>
 
-    <script src="script.js "></script>
+    <script src="script.js"></script>
 
 </body>
 
